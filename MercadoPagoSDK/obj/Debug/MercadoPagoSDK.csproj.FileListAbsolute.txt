@@ -1,0 +1,5 @@
+C:\Users\scirielli.ML\Desktop\CheckoutCSharpSDK\mercadopago\bin\Debug\MercadoPagoSDK.dll
+C:\Users\scirielli.ML\Desktop\CheckoutCSharpSDK\mercadopago\bin\Debug\MercadoPagoSDK.pdb
+C:\Users\scirielli.ML\Desktop\CheckoutCSharpSDK\mercadopago\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\scirielli.ML\Desktop\CheckoutCSharpSDK\mercadopago\obj\Debug\MercadoPagoSDK.dll
+C:\Users\scirielli.ML\Desktop\CheckoutCSharpSDK\mercadopago\obj\Debug\MercadoPagoSDK.pdb
