@@ -1,119 +1,165 @@
-﻿using System;
+﻿/*
+ * Copyright 2011 MercadoLibre, Inc.
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may
+ * not use this file except in compliance with the License. You may obtain
+ * a copy of the License at
+ * 
+ *  http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations
+ * under the License.
+ */
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
 namespace MercadoPagoSDK
 {
+    /// <summary>
+    /// A representation of the item resource. 
+    /// </summary>
     public class Item
     {
+        /// <summary>
+        /// The item as a json.
+        /// </summary>
         private JSONObject _json;
 
+        /// <summary>
+        /// Create a new item instance with empty values.
+        /// </summary>
         public Item()
         {
-            string json = "{";
-            json += "\"currency_id\":\"\",";
-            json += "\"description\":\"\",";
-            json += "\"id\":\"\",";
-            json += "\"picture_url\":\"\",";
-            json += "\"quantity\":0,";
-            json += "\"title\":\"\",";
-            json += "\"unit_price\":0";
-            json += "}";
+            string json = "{}";
+
             _json = JSONObject.CreateFromString(json);
         }
 
+        /// <summary>
+        /// Create a new item instance using a valid json.
+        /// </summary>
+        /// <param name="json">The json object used to
+        /// fill the item data</param>
         public Item(JSONObject json)
         {
+            // todo: strong type validation
             _json = json;
         }
 
-        // todo: como valido que no me asignen cualquier fruta
-
-        public string CurrencyId
+        /// <summary>
+        /// CurrencyId field.
+        /// </summary>
+        public String CurrencyId
         {
             get
             {
-                return _json.Dictionary["currency_id"].String;
+                return _json.GetJSONStringAttribute("currency_id");
             }
             set
             {
-                _json.Dictionary["currency_id"] = JSONObject.CreateFromString(value);
+                _json.SetJSONStringAttribute("currency_id", value);
             }
         }
 
-        public string Description
+        /// <summary>
+        /// Description field.
+        /// </summary>
+        public String Description
         {
             get
             {
-                return _json.Dictionary["description"].String;
+                return _json.GetJSONStringAttribute("description");
             }
             set
             {
-                _json.Dictionary["description"] = JSONObject.CreateFromString(value);
+                _json.SetJSONStringAttribute("description", value);
             }
         }
 
-        public string Id
+        /// <summary>
+        /// Id field.
+        /// </summary>
+        public String Id
         {
             get
             {
-                return _json.Dictionary["id"].String;
+                return _json.GetJSONStringAttribute("id");
             }
             set
             {
-                _json.Dictionary["id"] = JSONObject.CreateFromString(value);
+                _json.SetJSONStringAttribute("id", value);
             }
         }
 
-        public Int16 Quantity
+        /// <summary>
+        /// Quantity field.
+        /// </summary>
+        public Int16? Quantity
         {
             get
             {
-                return Convert.ToInt16(_json.Dictionary["quantity"].String);
+                return _json.GetJSONInt16Attribute("quantity");
             }
             set
             {
-                _json.Dictionary["quantity"] = JSONObject.CreateFromString(value.ToString());
+                _json.SetJSONInt16Attribute("quantity", value);
             }
         }
 
-        public string PictureUrl
+        /// <summary>
+        /// PictureUrl field.
+        /// </summary>
+        public String PictureUrl
         {
             get
             {
-                return _json.Dictionary["picture_url"].String;
+                return _json.GetJSONStringAttribute("picture_url");
             }
             set
             {
-                _json.Dictionary["picture_url"] = JSONObject.CreateFromString(value);
+                _json.SetJSONStringAttribute("picture_url", value);
             }
         }
 
-        public string Title
+        /// <summary>
+        /// Title field.
+        /// </summary>
+        public String Title
         {
             get
             {
-                return _json.Dictionary["title"].String;
+                return _json.GetJSONStringAttribute("title");
             }
             set
             {
-                _json.Dictionary["title"] = JSONObject.CreateFromString(value);
+                _json.SetJSONStringAttribute("title", value);
             }
         }
 
-        public Int16 UnitPrice
+        /// <summary>
+        /// UnitPrice field.
+        /// </summary>
+        public Int16? UnitPrice
         {
             get
             {
-                return Convert.ToInt16(_json.Dictionary["unit_price"].String);
+                return _json.GetJSONInt16Attribute("unit_price");
             }
             set
             {
-                _json.Dictionary["unit_price"] = JSONObject.CreateFromString(value.ToString());
+                _json.SetJSONInt16Attribute("unit_price", value);
             }
         }
 
+        /// <summary>
+        /// Returns the item as a json object.
+        /// </summary>
         public JSONObject ToJSON()
         {
             return _json;

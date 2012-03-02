@@ -1,4 +1,20 @@
-﻿using System;
+﻿/*
+ * Copyright 2011 MercadoLibre, Inc.
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may
+ * not use this file except in compliance with the License. You may obtain
+ * a copy of the License at
+ * 
+ *  http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations
+ * under the License.
+ */
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,47 +27,14 @@ using System.Web.Script.Serialization;
 
 namespace MercadoPagoSDK
 {
-    public class CheckoutHelper
-    {	
-        // todo: to app.config
-        public static string API_BASE_URL = "https://api.mercadolibre.com";
-        public static string APP_SECURITY_PATH = "/oauth/token";
-        public static string PREFERENCE_PATH = "/checkout/preferences";
-
-        private RESTAPI api;
-
-        public string AccessToken 
-        {
-            get
-            {
-                return api.AccessToken;
-            }
-            set
-            {
-                api.AccessToken = value;
-            }
-        }
-
-        public CheckoutHelper()
-        {
-            api = new RESTAPI(new Uri(API_BASE_URL));
-        }
-
-        public Token CreateAccessToken(string clientId, string clientSecret)
-		{
-		    // Set client credential
-            Credential credential = new Credential();
-			credential.ClientId = clientId;
-			credential.ClientSecret = clientSecret;
-			credential.GrantType = "client_credentials";
-
-            // Create token
-            JSONObject json = api.Post(APP_SECURITY_PATH, credential.ToJSON(), ContentType.HTTP);
-            Token token = new Token(json);
-
-            return token;
-        }
-
+    /// <summary>
+    /// A helper for Checkout operations. 
+    /// </summary>
+    public class CheckoutHelper : BaseHelper
+    {
+        /// <summary>
+        /// Creates a checkout preference. 
+        /// </summary>
         public Preference CreatePreference(Preference preference)
         {
             JSONObject json = api.Post(PREFERENCE_PATH, preference.ToJSON(), ContentType.JSON);
@@ -59,18 +42,21 @@ namespace MercadoPagoSDK
 
             return preference;
 		}
-		
+
+        /// <summary>
+        /// Updates a checkout preference. 
+        /// </summary>		
 		public Preference UpdatePreference(Preference preference)
 		{
 		    return null;
 		}
-		
+
+        /// <summary>
+        /// Gets a checkout preference. 
+        /// </summary>
 		public Preference GetPreference(string preferenceId)
 		{
 			return null;
 		}
-		
-		public void DeletePreference(string preferenceId)
-		{}
     }
 }

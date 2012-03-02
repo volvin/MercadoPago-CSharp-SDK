@@ -1,5 +1,6 @@
 /*
  * Copyright 2010 Facebook, Inc.
+ * Copyright 2011 MercadoLibre, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may
  * not use this file except in compliance with the License. You may obtain
@@ -21,12 +22,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("FacebookAPI")]
+[assembly: AssemblyTitle("MercadoPagoSDK")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Facebook")]
-[assembly: AssemblyProduct("FacebookAPI")]
-[assembly: AssemblyCopyright("Copyright © Facebook 2010")]
+[assembly: AssemblyCompany("MercadoLibre")]
+[assembly: AssemblyProduct("MercadoPagoSDK")]
+[assembly: AssemblyCopyright("Copyright © MercadoLibre 2011")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

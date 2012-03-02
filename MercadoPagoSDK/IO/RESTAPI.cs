@@ -1,6 +1,12 @@
 /*
  * Copyright 2010 Facebook, Inc.
- *
+ * Copyright 2011 MercadoLibre, Inc.
+ * 
+ * General purpose REST API based on FacebookAPI class.
+ * -User defined API Base URL 
+ * -HTTP or JSON content types supported.
+ * -MercadoLibre API access token included in full path url.
+ * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may
  * not use this file except in compliance with the License. You may obtain
  * a copy of the License at
@@ -39,7 +45,7 @@ namespace MercadoPagoSDK
     }
 
     /// <summary>
-    /// Wrapper around the Facebook Graph API. 
+    /// Generic REST API util. 
     /// </summary>
     public class RESTAPI
     {
@@ -72,7 +78,7 @@ namespace MercadoPagoSDK
         }
 
         /// <summary>
-        /// Makes a Facebook Graph API GET request.
+        /// Makes a MercadoLibre API GET request.
         /// </summary>
         /// <param name="relativePath">The path for the call,
         /// e.g. /username</param>
@@ -82,7 +88,7 @@ namespace MercadoPagoSDK
         }
 
         /// <summary>
-        /// Makes a Facebook Graph API GET request.
+        /// Makes a MercadoLibre API GET request.
         /// </summary>
         /// <param name="relativePath">The path for the call,
         /// e.g. /username</param>
@@ -94,7 +100,7 @@ namespace MercadoPagoSDK
         }
 
         /// <summary>
-        /// Makes a Facebook Graph API DELETE request.
+        /// Makes a MercadoLibre API DELETE request.
         /// </summary>
         /// <param name="relativePath">The path for the call,
         /// e.g. /username</param>
@@ -104,7 +110,7 @@ namespace MercadoPagoSDK
         }
 
         /// <summary>
-        /// Makes a Facebook Graph API POST request.
+        /// Makes a MercadoLibre API POST request.
         /// </summary>
         /// <param name="relativePath">The path for the call,
         /// e.g. /username</param>
@@ -122,14 +128,8 @@ namespace MercadoPagoSDK
         private Uri _baseURL;
 
         /// <summary>
-        /// Makes a Facebook Graph API Call.
+        /// Makes a MercadoLibre API Call.
         /// </summary>
-        /// <param name="relativePath">The path for the call, 
-        /// e.g. /username</param>
-        /// <param name="httpVerb">The HTTP verb to use, e.g.
-        /// GET, POST, DELETE</param>
-        /// <param name="args">A dictionary of key/value pairs that
-        /// will get passed as query arguments.</param>
         private JSONObject Call(string relativePath, HttpVerb httpVerb, JSONObject json, ContentType contentType = ContentType.JSON)
         {
             Uri url = new Uri(_baseURL, relativePath);
@@ -146,10 +146,6 @@ namespace MercadoPagoSDK
         /// <summary>
         /// Make an HTTP request, with the given query args
         /// </summary>
-        /// <param name="url">The URL of the request</param>
-        /// <param name="verb">The HTTP verb to use</param>
-        /// <param name="args">Dictionary of key/value pairs that represents
-        /// the key/value pairs for the request</param>
         private string MakeRequest(Uri url, HttpVerb httpVerb, JSONObject json, ContentType contentType = ContentType.JSON)
         {
             // Prepare HTTP url
@@ -199,6 +195,9 @@ namespace MercadoPagoSDK
             }
         }
 
+        /// <summary>
+        /// Prepares API url including access token and extra parameters.
+        /// </summary>
         private Uri PrepareUrl(Uri url, HttpVerb httpVerb, JSONObject json, string accessToken, ContentType contentType = ContentType.JSON)
         {
             if ((httpVerb == HttpVerb.GET) && (!string.IsNullOrEmpty(accessToken)) && (json != null && json.Dictionary.Keys.Count > 0) && (!string.IsNullOrEmpty(accessToken)))
@@ -226,9 +225,6 @@ namespace MercadoPagoSDK
         /// <summary>
         /// Encode a dictionary of key/value pairs as an HTTP query string.
         /// </summary>
-        /// <param name="dict">The dictionary to encode</param>
-        /// <param name="questionMark">Whether or not to start it
-        /// with a question mark (for GET requests)</param>
         private string EncodeArgs(HttpVerb httpVerb, JSONObject json, ContentType contentType = ContentType.JSON)
         {
             StringBuilder sb = new StringBuilder();

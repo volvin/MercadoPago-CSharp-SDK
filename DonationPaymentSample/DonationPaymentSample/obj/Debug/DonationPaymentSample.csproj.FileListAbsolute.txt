@@ -12,3 +12,10 @@ C:\Users\scirielli.ML\Documents\Visual Studio 2010\Projects\Mercadopago\Donation
 C:\Users\scirielli.ML\Documents\Visual Studio 2010\Projects\Mercadopago\DonationPaymentSample\DonationPaymentSample\obj\Debug\ResolveAssemblyReference.cache
 C:\Users\scirielli.ML\Documents\Visual Studio 2010\Projects\Mercadopago\DonationPaymentSample\DonationPaymentSample\obj\Debug\DonationPaymentSample.dll
 C:\Users\scirielli.ML\Documents\Visual Studio 2010\Projects\Mercadopago\DonationPaymentSample\DonationPaymentSample\obj\Debug\DonationPaymentSample.pdb
+C:\Users\scirielli.ML\MercadoPagoSDK\DonationPaymentSample\DonationPaymentSample\bin\DonationPaymentSample.dll
+C:\Users\scirielli.ML\MercadoPagoSDK\DonationPaymentSample\DonationPaymentSample\bin\DonationPaymentSample.pdb
+C:\Users\scirielli.ML\MercadoPagoSDK\DonationPaymentSample\DonationPaymentSample\bin\MercadoPagoSDK.dll
+C:\Users\scirielli.ML\MercadoPagoSDK\DonationPaymentSample\DonationPaymentSample\bin\MercadoPagoSDK.pdb
+C:\Users\scirielli.ML\MercadoPagoSDK\DonationPaymentSample\DonationPaymentSample\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\scirielli.ML\MercadoPagoSDK\DonationPaymentSample\DonationPaymentSample\obj\Debug\DonationPaymentSample.dll
+C:\Users\scirielli.ML\MercadoPagoSDK\DonationPaymentSample\DonationPaymentSample\obj\Debug\DonationPaymentSample.pdb

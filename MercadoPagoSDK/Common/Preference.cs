@@ -1,241 +1,254 @@
-﻿using System;
+﻿/*
+ * Copyright 2011 MercadoLibre, Inc.
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may
+ * not use this file except in compliance with the License. You may obtain
+ * a copy of the License at
+ * 
+ *  http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations
+ * under the License.
+ */
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
 namespace MercadoPagoSDK
 {
+    /// <summary>
+    /// A representation of the preference resource. 
+    /// </summary>
     public class Preference
     {
+        /// <summary>
+        /// The preference as a json.
+        /// </summary>
         private JSONObject _json;
 
+        /// <summary>
+        /// Create a new preference instance with empty values.
+        /// </summary>
         public Preference()
         {
-            string json = "{";
-            json += "back_urls:" + new ResponseUrls().ToJSON().ToString() + ",";
-            json += "external_reference:\"\",";
-            json += "items:[],";
-            json += "payer:" + new User().ToJSON().ToString() + ",";
-            json += "payment_methods:" + new PaymentChoices().ToJSON().ToString();
-            json += "}";
+            string json = "{}";
 
             _json = JSONObject.CreateFromString(json);
         }
 
+        /// <summary>
+        /// Create a new preference instance using a valid json.
+        /// </summary>
+        /// <param name="json">The json object used to
+        /// fill the preference data</param>
         public Preference(JSONObject json)
         {
+            // todo: strong type validation
             _json = json;
         }
 
-        public DateTime ActivationDate
+        /// <summary>
+        /// ActivationDate field.
+        /// </summary>
+        public DateTime? ActivationDate
         {
             get
             {
-                return Convert.ToDateTime(_json.Dictionary["expiration_date_from"].String);
+                return _json.GetJSONDateTimeAttribute("expiration_date_from");
             }
             set
             {
-                try
-                {
-                    _json.Dictionary["expiration_date_from"] = JSONObject.CreateFromString(value.ToString("yyyy-MM-ddThh:mm:ss.fffzzzz"));
-                }
-                catch (KeyNotFoundException)
-                {
-                    _json.Dictionary.Add("expiration_date_from", JSONObject.CreateFromString(value.ToString("yyyy-MM-ddThh:mm:ss.fffzzzz")));
-                }
-                catch (Exception e)
-                {
-                    throw e;
-                }
+                _json.SetJSONDateTimeAttribute("expiration_date_from", value);
             }
         }
 
+        /// <summary>
+        /// BackUrls field.
+        /// </summary>
         public ResponseUrls BackUrls
         {
             get
             {
-                return new ResponseUrls(_json.Dictionary["back_urls"]);
+                return new ResponseUrls(_json.GetJSONCustomClassAttribute("back_urls"));
             }
             set
             {
-                _json.Dictionary["back_urls"] = value.ToJSON();
+                _json.SetJSONCustomClassAttribute("back_urls", value.ToJSON());
             }
         }
 
-        public Int32 CollectorId
+        /// <summary>
+        /// CollectorId field.
+        /// </summary>
+        public Int32? CollectorId
         {
             get
             {
-                return Convert.ToInt32(_json.Dictionary["collector_id"].String);
+                return _json.GetJSONInt32Attribute("collector_id");
             }
         }
 
+        /// <summary>
+        /// CustomPaymentChoices field.
+        /// </summary>
         public PaymentChoices CustomPaymentChoices
         {
             get
             {
-                return new PaymentChoices(_json.Dictionary["payment_methods"]);
+                return new PaymentChoices(_json.GetJSONCustomClassAttribute("payment_methods"));
             }
             set
             {
-                _json.Dictionary["payment_methods"] = value.ToJSON();
+                _json.SetJSONCustomClassAttribute("payment_methods", value.ToJSON());
             }
         }
 
-        public DateTime DateCreated
+        /// <summary>
+        /// DateCreated field.
+        /// </summary>
+        public DateTime? DateCreated
         {
             get 
             {
-                return Convert.ToDateTime(_json.Dictionary["date_created"].String);
+                return _json.GetJSONDateTimeAttribute("date_created");
             }
         }
-        
-        public DateTime ExpirationDate
+
+        /// <summary>
+        /// ExpirationDate field.
+        /// </summary>        
+        public DateTime? ExpirationDate
         {
             get 
             {
-                return Convert.ToDateTime(_json.Dictionary["expiration_date_to"].String);
+                return _json.GetJSONDateTimeAttribute("expiration_date_to");
             }
             set 
             {
-                try
-                {
-                    _json.Dictionary["expiration_date_to"] = JSONObject.CreateFromString(value.ToString("yyyy-MM-ddThh:mm:ss.fffzzzz"));
-                }
-                catch (KeyNotFoundException)
-                {
-                    _json.Dictionary.Add("expiration_date_to", JSONObject.CreateFromString(value.ToString("yyyy-MM-ddThh:mm:ss.fffzzzz")));
-                }
-                catch (Exception e)
-                {
-                    throw e;
-                }
+                _json.SetJSONDateTimeAttribute("expiration_date_to", value);
             }
         }
 
-        public bool Expires
+        /// <summary>
+        /// Expires field.
+        /// </summary>
+        public bool? Expires
         {
             get
             {
-                return Convert.ToBoolean(_json.Dictionary["expires"].String);            
+                return _json.GetJSONBooleanAttribute("expires");            
             }
             set 
             {
-                try
-                {
-                    _json.Dictionary["expires"] = JSONObject.CreateFromString(value.ToString());
-                }
-                catch (KeyNotFoundException)
-                {
-                    _json.Dictionary.Add("expires", JSONObject.CreateFromString(value.ToString()));
-                }
-                catch (Exception e)
-                {
-                    throw e;
-                }
+                _json.SetJSONBooleanAttribute("expires", value);
             }
         }
 
-        public string ExternalReference
+        /// <summary>
+        /// ExternalReference field.
+        /// </summary>
+        public String ExternalReference
         {
             get
             {
-                return _json.Dictionary["external_reference"].String;
+                return _json.GetJSONStringAttribute("external_reference");
             }
             set
             {
-                _json.Dictionary["external_reference"] = JSONObject.CreateFromString(value);
+                _json.SetJSONStringAttribute("external_reference", value);
             }
         }
 
-        public string Id
+        /// <summary>
+        /// Id field.
+        /// </summary>
+        public String Id
         {
             get
             {
-                return _json.Dictionary["id"].String;
+                return _json.GetJSONStringAttribute("id");
             }
             set
             {
-                _json.Dictionary["id"] = JSONObject.CreateFromString(value);
-            }
-        }
-        public string InitPoint
-        {
-            get
-            {
-                return _json.Dictionary["init_point"].String;
+                _json.SetJSONStringAttribute("id", value);
             }
         }
 
+        /// <summary>
+        /// InitPoint field.
+        /// </summary>
+        public String InitPoint
+        {
+            get
+            {
+                return _json.GetJSONStringAttribute("init_point");
+            }
+        }
+
+        /// <summary>
+        /// Items field.
+        /// </summary>
         public ItemList Items
         {
             get
             {
-                return new ItemList(_json.Dictionary["items"]);
+                return new ItemList(_json.GetJSONCustomClassAttribute("items"));
             }
             set
             {
-                _json.Dictionary["items"] = value.ToJSON();
+                _json.SetJSONCustomClassAttribute("items", value.ToJSON());
             }
         }
 
-        public User Payer
+        /// <summary>
+        /// Payer field.
+        /// </summary>
+        public UserEx Payer
         {
             get
             {
-                return new User(_json.Dictionary["payer"]);
+                return new UserEx(_json.GetJSONCustomClassAttribute("payer"));
             }
             set
             {
-                _json.Dictionary["payer"] = value.ToJSON();
+                _json.SetJSONCustomClassAttribute("payer", value.ToJSON());
             }
         }
 
-        public Int32 SponsorId
+        /// <summary>
+        /// SponsorId field.
+        /// </summary>
+        public Int32? SponsorId
         {
             get
             {
-                try
-                {
-                    return Convert.ToInt32(_json.Dictionary["sponsor_id"].String);
-                }
-                catch
-                {
-                    return 0;
-                }
+                return _json.GetJSONInt32Attribute("sponsor_id");
             }
         }
 
-        public Int16 SubscriptionPlanId
+        /// <summary>
+        /// SubscriptionPlanId field.
+        /// </summary>
+        public Int16? SubscriptionPlanId
         {
             get
             {
-                try
-                {
-                    return Convert.ToInt16(_json.Dictionary["subscription_plan_id"].String);
-                }
-                catch
-                {
-                    return 0;
-                }
+                return _json.GetJSONInt16Attribute("subscription_plan_id");
             }
             set
             {
-                try
-                {
-                    _json.Dictionary["subscription_plan_id"] = JSONObject.CreateFromString(value.ToString());
-                }
-                catch (KeyNotFoundException)
-                {
-                    _json.Dictionary.Add("subscription_plan_id", JSONObject.CreateFromString(value.ToString()));
-                }
-                catch (Exception e)
-                {
-                    throw e;
-                }
+                _json.SetJSONInt16Attribute("subscription_plan_id", value);
             }
         }
 
+        /// <summary>
+        /// Returns the preference as a json object.
+        /// </summary>
         public JSONObject ToJSON()
         {
             return _json;

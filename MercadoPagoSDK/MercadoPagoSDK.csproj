@@ -69,7 +69,13 @@ under the License.
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\CollectionNotification.cs" />
+    <Compile Include="Common\Collection.cs" />
+    <Compile Include="Common\UserEx.cs" />
+    <Compile Include="Common\Phone.cs" />
     <Compile Include="Helpers\CheckoutHelper.cs" />
+    <Compile Include="Helpers\BaseHelper.cs" />
+    <Compile Include="Helpers\PaymentsHelper.cs" />
     <Compile Include="IO\Credential.cs" />
     <Compile Include="Common\IdList.cs" />
     <Compile Include="Common\ItemList.cs" />

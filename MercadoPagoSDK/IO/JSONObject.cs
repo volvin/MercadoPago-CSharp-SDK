@@ -1,6 +1,10 @@
 /*
  * Copyright 2010 Facebook, Inc.
+ * Copyright 2011 MercadoLibre, Inc.
  *
+ * Changed to retrieve a well-formed json string running .ToString() method.
+ * Allows to serialize scalar data at CreateFromString method.
+ * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may
  * not use this file except in compliance with the License. You may obtain
  * a copy of the License at
@@ -47,7 +51,6 @@ namespace MercadoPagoSDK
             catch (ArgumentException)
             {
                 o = s;  // serialize as scalar data
-                //throw new RESTAPIException("JSONException", "Not a valid JSON string.");
             }
 
             return Create(o);
@@ -93,8 +96,22 @@ namespace MercadoPagoSDK
         {
             get
             {
-                Int64 tmp;
-                return Int64.TryParse(_stringData, out tmp);
+                if (_stringData == null || _stringData.Length == 0)
+                {
+                    return false;
+                }
+                else
+                {
+                    if ((_stringData[0].ToString() == "0") && (_stringData.Length > 1))
+                    {
+                        return false;  // numbers that begins with a zero are treated like strings
+                    }
+                    else
+                    {
+                        Int64 tmp;
+                        return Int64.TryParse(_stringData, out tmp);
+                    }
+                }
             }
         }
 
@@ -165,7 +182,6 @@ namespace MercadoPagoSDK
             }
         }
 
-
         /// <summary>
         /// Prints the JSONObject as a formatted string, suitable for viewing.
         /// </summary>
@@ -174,6 +190,352 @@ namespace MercadoPagoSDK
             StringBuilder sb = new StringBuilder();
             RecursiveObjectToString(this, sb);
             return sb.ToString();
+        }
+
+        /// <summary>
+        /// Returns a boolean attribute contained in this json object 
+        /// </summary>
+        public bool? GetJSONBooleanAttribute(string attribute)
+        {
+            try
+            {
+                string boolValue = this.Dictionary[attribute].String;
+                if (boolValue != "null")
+                {
+                    return Convert.ToBoolean(boolValue);
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Returns a custom class attribute contained in this json object 
+        /// </summary>
+        public JSONObject GetJSONCustomClassAttribute(string attribute)
+        {
+            try
+            {
+                return this.Dictionary[attribute];
+            }
+            catch
+            {
+                return JSONObject.CreateFromString("{}");
+            }
+        }
+
+        /// <summary>
+        /// Returns a datetime attribute contained in this json object 
+        /// </summary>
+        public DateTime? GetJSONDateTimeAttribute(string attribute)
+        {
+            try
+            {
+                string dateTimeValue = this.Dictionary[attribute].String;
+                if (dateTimeValue != "null")
+                {
+                    return Convert.ToDateTime(dateTimeValue);
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch
+            {
+                return null;
+            }        
+        }
+
+        /// <summary>
+        /// Returns a float attribute contained in this json object 
+        /// </summary>
+        public float? GetJSONFloatAttribute(string attribute)
+        {
+            try
+            {
+                string floatValue = this.Dictionary[attribute].String;
+                if (floatValue != "null")
+                {
+                    return Convert.ToSingle(floatValue);
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Returns an int16 attribute contained in this json object 
+        /// </summary>
+        public Int16? GetJSONInt16Attribute(string attribute)
+        {
+            try
+            {
+                string int16Value = this.Dictionary[attribute].String;
+                if (int16Value != "null")
+                {
+                    return Convert.ToInt16(int16Value);
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Returns an int32 attribute contained in this json object 
+        /// </summary>
+        public Int32? GetJSONInt32Attribute(string attribute)
+        {
+            try
+            {
+                string int32Value = this.Dictionary[attribute].String;
+                if (int32Value != "null")
+                {
+                    return Convert.ToInt32(int32Value);
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Returns a string attribute contained in this json object 
+        /// </summary>
+        public String GetJSONStringAttribute(string attribute)
+        {
+            try
+            {
+                string stringValue = this.Dictionary[attribute].String;
+                if (stringValue != "null")
+                {
+                    return stringValue;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Sets a boolean attribute contained in this json object 
+        /// </summary>
+        public void SetJSONBooleanAttribute(string attribute, bool? value)
+        {
+            string newValue;
+
+            if (value != null)
+            {
+                newValue = value.ToString(); 
+            }
+            else
+            {
+                newValue = "null";
+            }
+            try
+            {
+                this.Dictionary[attribute] = JSONObject.CreateFromString(newValue);
+            }
+            catch (KeyNotFoundException)
+            {
+                this.Dictionary.Add(attribute, JSONObject.CreateFromString(newValue));
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        /// <summary>
+        /// Sets a custom class attribute contained in this json object 
+        /// </summary>
+        public void SetJSONCustomClassAttribute(string attribute, JSONObject value)
+        {
+            try
+            {
+                this.Dictionary[attribute] = value;
+            }
+            catch (KeyNotFoundException)
+            {
+                this.Dictionary.Add(attribute, value);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        /// <summary>
+        /// Returns a float attribute contained in this json object 
+        /// </summary>
+        public void SetJSONFloatAttribute(string attribute, float? value)
+        {
+            string newValue;
+
+            if (value != null)
+            {
+                newValue = value.ToString();
+            }
+            else
+            {
+                newValue = "null";
+            }
+            try
+            {
+                this.Dictionary[attribute] = JSONObject.CreateFromString(newValue);
+            }
+            catch (KeyNotFoundException)
+            {
+                this.Dictionary.Add(attribute, JSONObject.CreateFromString(newValue));
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        /// <summary>
+        /// Returns an int16 attribute contained in this json object 
+        /// </summary>
+        public void SetJSONInt16Attribute(string attribute, Int16? value)
+        {
+            string newValue;
+
+            if (value != null)
+            {
+                newValue = value.ToString(); 
+            }
+            else
+            {
+                newValue = "null";
+            }
+            try
+            {
+                this.Dictionary[attribute] = JSONObject.CreateFromString(newValue);
+            }
+            catch (KeyNotFoundException)
+            {
+                this.Dictionary.Add(attribute, JSONObject.CreateFromString(newValue));
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        /// <summary>
+        /// Returns an int32 attribute contained in this json object 
+        /// </summary>
+        public void SetJSONInt32Attribute(string attribute, Int32? value)
+        {
+            string newValue;
+
+            if (value != null)
+            {
+                newValue = value.ToString(); 
+            }
+            else
+            {
+                newValue = "null";
+            }
+            try
+            {
+                this.Dictionary[attribute] = JSONObject.CreateFromString(newValue);
+            }
+            catch (KeyNotFoundException)
+            {
+                this.Dictionary.Add(attribute, JSONObject.CreateFromString(newValue));
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        /// <summary>
+        /// Returns a datetime attribute contained in this json object 
+        /// </summary>
+        public void SetJSONDateTimeAttribute(string attribute, DateTime? value)
+        {
+            string newValue;
+
+            if (value != null)
+            {
+                newValue = value.Value.ToString("yyyy-MM-ddThh:mm:ss.fffzzzz"); 
+            }
+            else
+            {
+                newValue = "null";
+            }
+            try
+            {
+                this.Dictionary[attribute] = JSONObject.CreateFromString(newValue);
+            }
+            catch (KeyNotFoundException)
+            {
+                this.Dictionary.Add(attribute, JSONObject.CreateFromString(newValue));
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }        
+        }
+
+        /// <summary>
+        /// Returns a string attribute contained in this json object 
+        /// </summary>
+        public void SetJSONStringAttribute(string attribute, String value)
+        {
+            string newValue;
+
+            if (value != null)
+            {
+                newValue = value.ToString(); 
+            }
+            else
+            {
+                newValue = "null";
+            }
+            try
+            {
+                this.Dictionary[attribute] = JSONObject.CreateFromString(newValue);
+            }
+            catch (KeyNotFoundException)
+            {
+                this.Dictionary.Add(attribute, JSONObject.CreateFromString(newValue));
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
         }
 
         #region Private Members
@@ -218,6 +580,19 @@ namespace MercadoPagoSDK
             return obj;
         }
 
+        /// <summary>
+        /// Recursively deconstructs this JSONObject to string
+        /// </summary>
+        private static void RecursiveDictionaryToString(JSONObject obj, StringBuilder sb)
+        {
+            foreach (KeyValuePair<string, JSONObject> kvp in obj.Dictionary)
+            {
+                sb.Append("\"" + kvp.Key + "\"");
+                sb.Append(":");
+                RecursiveObjectToString(kvp.Value, sb);
+                sb.Append(",");
+            }
+        }
         private static void RecursiveObjectToString(JSONObject obj, StringBuilder sb)
         {
             if (obj.IsDictionary)
@@ -260,19 +635,7 @@ namespace MercadoPagoSDK
                 }
             }
         }
-        private static void RecursiveDictionaryToString(JSONObject obj, StringBuilder sb)
-        {
-            foreach (KeyValuePair<string, JSONObject> kvp in obj.Dictionary)
-            {
-                sb.Append("\"" + kvp.Key + "\"");
-                //sb.Append(kvp.Key);
-                sb.Append(":");
-                RecursiveObjectToString(kvp.Value, sb);
-                sb.Append(",");
-            }
-        }
 
         #endregion
-
     }
 }
