@@ -64,7 +64,6 @@ namespace DonationPaymentSample
             string email = Email.Text;
 
             // Create checkout preference
-            //Preference preference = CreatePreference(amount, email);
             Preference preference = CreatePreference(amount, email);
 
             // Navigate payment checkout
