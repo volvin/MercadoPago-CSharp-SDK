@@ -22,7 +22,7 @@ using System.Text;
 namespace MercadoPagoSDK
 {
     /// <summary>
-    /// A representation of the id list resource. 
+    /// A representation of a list of string ids. 
     /// </summary>
     public class IdList : List<string>
     {
@@ -57,7 +57,7 @@ namespace MercadoPagoSDK
         /// </summary>
         public void Add(string id)
         {
-            _json.Array.Add(JSONObject.CreateFromString(id));
+            _json.Array.Add(JSONObject.CreateFromString("{id: \"" + id + "\"}"));
         }
 
         /// <summary>

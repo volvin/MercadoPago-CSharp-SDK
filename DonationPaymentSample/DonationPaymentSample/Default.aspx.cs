@@ -127,6 +127,10 @@ namespace DonationPaymentSample
             preference.Items.Add(item);
             preference.Payer = new UserEx();
             preference.Payer.Email = email;
+            preference.CustomPaymentChoices = new PaymentChoices();
+            preference.CustomPaymentChoices.ExcludedTypes = new IdList();  // remove ticket and bank transfer options
+            preference.CustomPaymentChoices.ExcludedTypes.Add("ticket");
+            preference.CustomPaymentChoices.ExcludedTypes.Add("bank_transfer");
             
             // Create preference
             preference = ch.CreatePreference(preference);
