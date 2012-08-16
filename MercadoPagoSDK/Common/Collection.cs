@@ -27,15 +27,20 @@ namespace MercadoPagoSDK
     public class Collection
     {
         /// <summary>
-        /// The collection as a json.
+        /// Create a new collection instance with empty values.
         /// </summary>
-        private JSONObject _json;
+        public Collection()
+        {
+            string json = "{}";
+
+            _json = JSONObject.CreateFromString(json);
+        }
 
         /// <summary>
         /// Create a new collection instance using a valid json.
         /// </summary>
         /// <param name="json">The json object used to
-        /// fill the user data</param>
+        /// fill the collection data</param>
         public Collection(JSONObject json)
         {
             // todo: strong type validation
@@ -95,6 +100,10 @@ namespace MercadoPagoSDK
             {
                 return _json.GetJSONStringAttribute("external_reference");
             }
+            set 
+            {
+                _json.SetJSONStringAttribute("external_reference", value);
+            }
         }
 
         /// <summary>
@@ -116,6 +125,10 @@ namespace MercadoPagoSDK
             get
             {
                 return _json.GetJSONInt32Attribute("id");
+            }
+            set 
+            {
+                _json.SetJSONInt32Attribute("id", value);
             }
         }
 
@@ -282,6 +295,10 @@ namespace MercadoPagoSDK
             {
                 return _json.GetJSONStringAttribute("status");
             }
+            set
+            {
+                _json.SetJSONStringAttribute("status", value);
+            }
         }
 
         /// <summary>
@@ -324,5 +341,14 @@ namespace MercadoPagoSDK
         {
             return _json;
         }
+
+        #region "Private Members"
+
+        /// <summary>
+        /// The collection as a json.
+        /// </summary>
+        private JSONObject _json;
+
+        #endregion
     }
 }

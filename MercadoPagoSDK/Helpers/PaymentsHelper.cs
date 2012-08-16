@@ -27,14 +27,50 @@ namespace MercadoPagoSDK
     public class PaymentsHelper : BaseHelper
     {
         /// <summary>
+        /// Proactively cancels a collection. 
+        /// </summary>
+        public void CancelCollection(Int32 collectionId)
+        {
+            // Create a collection status change
+            Collection collection = new Collection();
+            collection.Id = collectionId;
+            collection.Status = "cancelled";
+            
+            // Execute update
+            UpdateCollection(collection);
+        }
+
+        /// <summary>
         /// Gets a collection notification. 
         /// </summary>
         public CollectionNotification GetCollectionNotification(Int32 collectionNotificationId)
         {
-            JSONObject json = api.Get(COLLECTION_NOTIFICATION_PATH + "/" + collectionNotificationId.ToString());
+            JSONObject json = _api.Get(Properties.Settings.Default.CollectionsNotificationsUri + "/" + collectionNotificationId.ToString());
             CollectionNotification notification = new CollectionNotification(json);
 
             return notification;
+        }
+
+        /// <summary>
+        /// Searches the api for collections. 
+        /// </summary>
+        public SearchPage<Collection> SearchCollections(List<KeyValuePair<string, string>> args)
+        {
+            JSONObject json = _api.Get(Properties.Settings.Default.CollectionsSearchUri, args);
+            SearchPage<Collection> searchPage = SearchPage<Collection>.CreateInstance(json);
+
+            return searchPage;
+        }
+
+        /// <summary>
+        /// Updates a collection. 
+        /// </summary>
+        public Collection UpdateCollection(Collection collection)
+        {
+            JSONObject json = _api.Put(Properties.Settings.Default.CollectionsUri + "/" + collection.Id.ToString(), collection.ToJSON(), ContentType.JSON);
+            Collection updatedCollection = new Collection(json);
+
+            return updatedCollection;
         }
     }
 }

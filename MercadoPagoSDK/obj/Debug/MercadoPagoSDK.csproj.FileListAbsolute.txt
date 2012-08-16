@@ -8,3 +8,4 @@ C:\Users\scirielli.ML\MercadoPagoSDK\MercadoPagoSDK\bin\Debug\MercadoPagoSDK.pdb
 C:\Users\scirielli.ML\MercadoPagoSDK\MercadoPagoSDK\obj\Debug\ResolveAssemblyReference.cache
 C:\Users\scirielli.ML\MercadoPagoSDK\MercadoPagoSDK\obj\Debug\MercadoPagoSDK.dll
 C:\Users\scirielli.ML\MercadoPagoSDK\MercadoPagoSDK\obj\Debug\MercadoPagoSDK.pdb
+C:\Users\scirielli.ML\MercadoPagoSDK\MercadoPagoSDK\bin\Debug\MercadoPagoSDK.dll.config

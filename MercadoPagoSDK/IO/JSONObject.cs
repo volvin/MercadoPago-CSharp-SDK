@@ -538,14 +538,14 @@ namespace MercadoPagoSDK
             }
         }
 
+        protected JSONObject()
+        { }
+
         #region Private Members
 
         private string _stringData;
         private List<JSONObject> _arrayData;
         private Dictionary<string, JSONObject> _dictData;
-
-        protected JSONObject() 
-        { }
 
         /// <summary>
         /// Recursively constructs this JSONObject 

@@ -26,16 +26,12 @@ namespace MercadoPagoSDK
     /// </summary>
     public class CollectionNotification
     {
-        /// <summary>
-        /// The collection within the notification.
-        /// </summary>
-        private Collection _collection;
 
         /// <summary>
-        /// The collection notification as a json.
+        /// Create a new collection notification instance using a valid json.
         /// </summary>
-        private JSONObject _json;
-
+        /// <param name="json">The json object used to
+        /// fill the collection notification data</param>
         public CollectionNotification(JSONObject json)
         {
             // todo: strong type validation
@@ -63,5 +59,19 @@ namespace MercadoPagoSDK
         {
             return _json;
         }
+
+        #region "Private Members"
+
+        /// <summary>
+        /// The collection within the notification.
+        /// </summary>
+        private Collection _collection;
+
+        /// <summary>
+        /// The collection notification as a json.
+        /// </summary>
+        private JSONObject _json;
+
+        #endregion
     }
 }

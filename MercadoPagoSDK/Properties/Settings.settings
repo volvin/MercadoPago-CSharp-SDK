@@ -1,0 +1,24 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="MercadoPagoSDK.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="ApiBaseUrl" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">https://api.mercadolibre.com</Value>
+    </Setting>
+    <Setting Name="AppSecurityUri" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">/oauth/token</Value>
+    </Setting>
+    <Setting Name="CollectionsUri" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">/collections</Value>
+    </Setting>
+    <Setting Name="CollectionsNotificationsUri" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">/collections/notifications</Value>
+    </Setting>
+    <Setting Name="CollectionsSearchUri" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">/collections/search</Value>
+    </Setting>
+    <Setting Name="PreferencesUri" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">/checkout/preferences</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

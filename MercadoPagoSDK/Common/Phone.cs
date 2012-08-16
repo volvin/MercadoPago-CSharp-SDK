@@ -27,11 +27,6 @@ namespace MercadoPagoSDK
     public class Phone
     {
         /// <summary>
-        /// The phone as a json.
-        /// </summary>
-        private JSONObject _json;
-
-        /// <summary>
         /// Create a new phone instance with empty values.
         /// </summary>
         public Phone()
@@ -104,5 +99,14 @@ namespace MercadoPagoSDK
         {
             return _json;
         }
+
+        #region "Private Members"
+
+        /// <summary>
+        /// The phone as a json.
+        /// </summary>
+        private JSONObject _json;
+
+        #endregion
     }
 }

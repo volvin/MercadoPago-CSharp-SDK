@@ -21,7 +21,6 @@ using System.Text;
 using System.Net;
 using System.IO;
 using System.Net.Security;
-using System.Security.Cryptography.X509Certificates;
 using System.Web;
 using System.Web.Script.Serialization;
 
@@ -32,15 +31,10 @@ namespace MercadoPagoSDK
     /// </summary>
     public abstract class BaseHelper
     {	
-        public static string API_BASE_URL = "https://api.mercadolibre.com";
-        public static string APP_SECURITY_PATH = "/oauth/token";
-        public static string PREFERENCE_PATH = "/checkout/preferences";
-        public static string COLLECTION_NOTIFICATION_PATH = "/collections/notifications";
-
         /// <summary>
         /// A RESTAPI object for api calls.
         /// </summary>
-        protected RESTAPI api;
+        protected RESTAPI _api;
 
         /// <summary>
         /// AccessToken field.
@@ -49,11 +43,11 @@ namespace MercadoPagoSDK
         {
             get
             {
-                return api.AccessToken;
+                return _api.AccessToken;
             }
             set
             {
-                api.AccessToken = value;
+                _api.AccessToken = value;
             }
         }
 
@@ -62,25 +56,16 @@ namespace MercadoPagoSDK
         /// </summary>
         public BaseHelper()
         {
-            api = new RESTAPI(new Uri(API_BASE_URL));
+            _api = new RESTAPI(new Uri(Properties.Settings.Default.ApiBaseUrl));
         }
 
         /// <summary>
         /// Creates an access token to use in API calls.
         /// </summary>
+        [System.Obsolete("Use static method AuthHelper.CreateAccessToken instead", false)]
         public Token CreateAccessToken(string clientId, string clientSecret)
-		{
-		    // Set client credential
-            Credential credential = new Credential();
-			credential.ClientId = clientId;
-			credential.ClientSecret = clientSecret;
-			credential.GrantType = "client_credentials";
-
-            // Create token
-            JSONObject json = api.Post(APP_SECURITY_PATH, credential.ToJSON(), ContentType.HTTP);
-            Token token = new Token(json);
-
-            return token;
+        {
+            return AuthHelper.CreateAccessToken(clientId, clientSecret);
         }
     }
 }

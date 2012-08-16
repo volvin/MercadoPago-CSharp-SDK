@@ -27,11 +27,6 @@ namespace MercadoPagoSDK
     public class Credential
     {
         /// <summary>
-        /// The credential as a json.
-        /// </summary>
-        private JSONObject _json;
-
-        /// <summary>
         /// Create a credential instance with empty values.
         /// </summary>
         public Credential()
@@ -103,5 +98,14 @@ namespace MercadoPagoSDK
         {
             return _json;
         }
+
+        #region "Private Members"
+
+        /// <summary>
+        /// The credential as a json.
+        /// </summary>
+        private JSONObject _json;
+
+        #endregion
     }
 }

@@ -21,42 +21,33 @@ using System.Text;
 using System.Net;
 using System.IO;
 using System.Net.Security;
-using System.Security.Cryptography.X509Certificates;
 using System.Web;
 using System.Web.Script.Serialization;
 
 namespace MercadoPagoSDK
 {
     /// <summary>
-    /// A helper for Checkout operations. 
+    /// A helper for Authentication and Authorization operations. 
     /// </summary>
-    public class CheckoutHelper : BaseHelper
+    public class AuthHelper
     {
         /// <summary>
-        /// Creates a checkout preference. 
+        /// Creates an access token to use in API calls.
         /// </summary>
-        public Preference CreatePreference(Preference preference)
+        public static Token CreateAccessToken(string clientId, string clientSecret)
         {
-            JSONObject json = _api.Post(Properties.Settings.Default.PreferencesUri, preference.ToJSON(), ContentType.JSON);
-            preference = new Preference(json);
+            // Set client credential
+            Credential credential = new Credential();
+            credential.ClientId = clientId;
+            credential.ClientSecret = clientSecret;
+            credential.GrantType = "client_credentials";
 
-            return preference;
-		}
+            // Create token
+            RESTAPI api = new RESTAPI(new Uri(Properties.Settings.Default.ApiBaseUrl));
+            JSONObject json = api.Post(Properties.Settings.Default.AppSecurityUri, credential.ToJSON(), ContentType.HTTP);
+            Token token = new Token(json);
 
-        /// <summary>
-        /// Updates a checkout preference. 
-        /// </summary>		
-		public Preference UpdatePreference(Preference preference)
-		{
-		    return null;
-		}
-
-        /// <summary>
-        /// Gets a checkout preference. 
-        /// </summary>
-		public Preference GetPreference(string preferenceId)
-		{
-			return null;
-		}
+            return token;
+        }
     }
 }

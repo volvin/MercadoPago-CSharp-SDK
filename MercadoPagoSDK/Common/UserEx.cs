@@ -27,11 +27,6 @@ namespace MercadoPagoSDK
     public class UserEx
     {
         /// <summary>
-        /// The user as a json.
-        /// </summary>
-        private JSONObject _json;
-
-        /// <summary>
         /// Create a new user instance with empty values.
         /// </summary>
         public UserEx()
@@ -104,5 +99,14 @@ namespace MercadoPagoSDK
         {
             return _json;
         }
+
+        #region "Private Members"
+
+        /// <summary>
+        /// The user as a json.
+        /// </summary>
+        private JSONObject _json;
+
+        #endregion
     }
 }

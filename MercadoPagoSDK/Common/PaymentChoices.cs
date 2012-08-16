@@ -27,11 +27,6 @@ namespace MercadoPagoSDK
     public class PaymentChoices
     {
         /// <summary>
-        /// The payment choices as a json.
-        /// </summary>
-        private JSONObject _json;
-
-        /// <summary>
         /// Create a new payment choices instance with empty values.
         /// </summary>
         public PaymentChoices()
@@ -104,5 +99,14 @@ namespace MercadoPagoSDK
         {
             return _json;
         }
+
+        #region "Private Members"
+
+        /// <summary>
+        /// The payment choices as a json.
+        /// </summary>
+        private JSONObject _json;
+
+        #endregion
     }
 }

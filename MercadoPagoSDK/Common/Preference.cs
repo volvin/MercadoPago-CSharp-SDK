@@ -27,11 +27,6 @@ namespace MercadoPagoSDK
     public class Preference
     {
         /// <summary>
-        /// The preference as a json.
-        /// </summary>
-        private JSONObject _json;
-
-        /// <summary>
         /// Create a new preference instance with empty values.
         /// </summary>
         public Preference()
@@ -253,5 +248,14 @@ namespace MercadoPagoSDK
         {
             return _json;
         }
+
+        #region "Private Members"
+
+        /// <summary>
+        /// The preference as a json.
+        /// </summary>
+        private JSONObject _json;
+
+        #endregion
     }
 }

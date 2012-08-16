@@ -27,11 +27,6 @@ namespace MercadoPagoSDK
     public class ResponseUrls
     {
         /// <summary>
-        /// The response urls as a json.
-        /// </summary>
-        private JSONObject _json;
-
-        /// <summary>
         /// Create a new response urls instance with empty values.
         /// </summary>
         public ResponseUrls()
@@ -104,5 +99,14 @@ namespace MercadoPagoSDK
         {
             return _json;
         }
+
+        #region "Private Members"
+
+        /// <summary>
+        /// The response urls as a json.
+        /// </summary>
+        private JSONObject _json;
+
+        #endregion
     }
 }

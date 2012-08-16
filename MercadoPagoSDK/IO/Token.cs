@@ -27,17 +27,13 @@ namespace MercadoPagoSDK
     public class Token
     {
         /// <summary>
-        /// The token as a json.
-        /// </summary>
-        private JSONObject _json;
-
-        /// <summary>
         /// Create a new token instance with empty values.
         /// </summary>
         public Token()
         {
             string json = "{}";
 
+            _dateCreated = DateTime.Now;
             _json = JSONObject.CreateFromString(json);
         }
 
@@ -63,6 +59,28 @@ namespace MercadoPagoSDK
             set
             {
                 _json.SetJSONStringAttribute("access_token", value);
+            }
+        }
+
+        /// <summary>
+        /// DateCreated field.
+        /// </summary>
+        public DateTime DateCreated
+        {
+            get
+            {
+                return _dateCreated;
+            }
+        }
+
+        /// <summary>
+        /// DateExpired field.
+        /// </summary>
+        public DateTime DateExpired
+        {
+            get
+            {
+                return _dateCreated.AddMilliseconds((double)_json.GetJSONInt16Attribute("expires_in"));
             }
         }
 
@@ -133,5 +151,19 @@ namespace MercadoPagoSDK
         {
             return _json;
         }
+
+        #region "Private Members"
+
+        /// <summary>
+        /// The token's creation date.
+        /// </summary>
+        private DateTime _dateCreated;
+
+        /// <summary>
+        /// The token as a json.
+        /// </summary>
+        private JSONObject _json;
+
+        #endregion
     }
 }

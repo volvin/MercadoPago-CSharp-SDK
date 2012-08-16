@@ -27,11 +27,6 @@ namespace MercadoPagoSDK
     public class Item
     {
         /// <summary>
-        /// The item as a json.
-        /// </summary>
-        private JSONObject _json;
-
-        /// <summary>
         /// Create a new item instance with empty values.
         /// </summary>
         public Item()
@@ -164,5 +159,14 @@ namespace MercadoPagoSDK
         {
             return _json;
         }
+
+        #region "Private Members"
+
+        /// <summary>
+        /// The item as a json.
+        /// </summary>
+        private JSONObject _json;
+
+        #endregion
     }
 }

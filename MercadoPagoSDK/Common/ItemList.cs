@@ -26,11 +26,6 @@ namespace MercadoPagoSDK
     /// </summary>
     public class ItemList : List<Item>
     {
-        /// <summary>
-        /// The item list as a json.
-        /// </summary>
-        private JSONObject _json;
-
         // todo: complete hole interface
 
         /// <summary>
@@ -101,5 +96,14 @@ namespace MercadoPagoSDK
         {
             return _json;
         }
+
+        #region "Private Members"
+
+        /// <summary>
+        /// The item list as a json.
+        /// </summary>
+        private JSONObject _json;
+
+        #endregion
     }
 }
