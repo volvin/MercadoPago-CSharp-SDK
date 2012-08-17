@@ -1,0 +1,7 @@
+C:\Users\scirielli.ML\MercadoPagoSDK\CollectionUpdateSample\CollectionUpdateSample\bin\CollectionUpdateSample.dll
+C:\Users\scirielli.ML\MercadoPagoSDK\CollectionUpdateSample\CollectionUpdateSample\bin\CollectionUpdateSample.pdb
+C:\Users\scirielli.ML\MercadoPagoSDK\CollectionUpdateSample\CollectionUpdateSample\bin\MercadoPagoSDK.dll
+C:\Users\scirielli.ML\MercadoPagoSDK\CollectionUpdateSample\CollectionUpdateSample\bin\MercadoPagoSDK.pdb
+C:\Users\scirielli.ML\MercadoPagoSDK\CollectionUpdateSample\CollectionUpdateSample\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\scirielli.ML\MercadoPagoSDK\CollectionUpdateSample\CollectionUpdateSample\obj\Debug\CollectionUpdateSample.dll
+C:\Users\scirielli.ML\MercadoPagoSDK\CollectionUpdateSample\CollectionUpdateSample\obj\Debug\CollectionUpdateSample.pdb
