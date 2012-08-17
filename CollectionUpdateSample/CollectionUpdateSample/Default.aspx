@@ -17,11 +17,11 @@
                 <table>
                     <tr>
                         <td>Your client id:</td>
-                        <td><asp:TextBox ID="ClientIdTxt" runat="server" Text="1982"></asp:TextBox></td>
+                        <td><asp:TextBox ID="ClientIdTxt" runat="server" Text=""></asp:TextBox></td>
                     </tr>
                     <tr>
                         <td>Your client secret:</td>
-                        <td><asp:TextBox ID="ClientSecretTxt" runat="server" Text="020Gc1hFJYJQ6ttYqwsl1rs5yIimcHkX" Width="322px"></asp:TextBox></td>
+                        <td><asp:TextBox ID="ClientSecretTxt" runat="server" Text="" Width="322px"></asp:TextBox></td>
                     </tr>
                     <tr>
                         <td><asp:Button ID="ContinueButton" runat="server" Text="Continue" onclick="ContinueButton_Click" /></td>
