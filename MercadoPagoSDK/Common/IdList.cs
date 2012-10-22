@@ -16,23 +16,14 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace MercadoPagoSDK
 {
     /// <summary>
     /// A representation of a list of string ids. 
     /// </summary>
-    public class IdList : List<string>
+    public class IdList
     {
-        /// <summary>
-        /// The id list as a json.
-        /// </summary>
-        private JSONObject _json;
-
-        // todo: complete hole interface
-
         /// <summary>
         /// Create a new id list instance.
         /// </summary>
@@ -53,7 +44,7 @@ namespace MercadoPagoSDK
         }
 
         /// <summary>
-        /// Add method override. 
+        /// Add method. 
         /// </summary>
         public void Add(string id)
         {
@@ -61,7 +52,7 @@ namespace MercadoPagoSDK
         }
 
         /// <summary>
-        /// Count method override. 
+        /// Count method. 
         /// </summary>
         public int Count
         {
@@ -72,7 +63,7 @@ namespace MercadoPagoSDK
         }
 
         /// <summary>
-        /// Remove method override. 
+        /// Remove method. 
         /// </summary>
         public bool Remove(Item item)
         {
@@ -101,5 +92,29 @@ namespace MercadoPagoSDK
         {
             return _json;
         }
+
+        /// <summary>
+        /// Returns the id list as a List_string_ object.
+        /// </summary>
+        public List<string> ToList()
+        {
+            List<string> list = new List<string>();
+
+            for (int index = 0; index <= (_json.Array.Count - 1); index++)
+            {
+                list.Add(_json.Array[index].ToString());
+            }
+
+            return list;
+        }
+
+        #region "Private Members"
+
+        /// <summary>
+        /// The id list as a json.
+        /// </summary>
+        private JSONObject _json;
+
+        #endregion
     }
 }

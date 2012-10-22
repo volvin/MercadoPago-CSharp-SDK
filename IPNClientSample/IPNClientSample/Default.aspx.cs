@@ -42,7 +42,7 @@ namespace IPNClientSample
                     // Remember 1st!
                     // Change the property settings (Settings.settings) for the following variables:
                     // Your ClientId, Your ClientSecret
-                    Token token = ph.CreateAccessToken(Properties.Settings.Default.ClientId, Properties.Settings.Default.ClientSecret);
+                    Token token = AuthHelper.CreateAccessToken(Properties.Settings.Default.ClientId, Properties.Settings.Default.ClientSecret);
                     ph.AccessToken = token.AccessToken;
 
                     // Get Collection Notification

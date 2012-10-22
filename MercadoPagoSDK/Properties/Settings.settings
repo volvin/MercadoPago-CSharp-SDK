@@ -20,5 +20,14 @@
     <Setting Name="PreferencesUri" Type="System.String" Scope="Application">
       <Value Profile="(Default)">/checkout/preferences</Value>
     </Setting>
+    <Setting Name="AccountBalanceUri" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">/mercadopago_account/balance</Value>
+    </Setting>
+    <Setting Name="UsersUri" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">/users</Value>
+    </Setting>
+    <Setting Name="MovementsSearchUri" Type="System.String" Scope="User">
+      <Value Profile="(Default)">/mercadopago_account/movements/search</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

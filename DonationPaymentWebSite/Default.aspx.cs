@@ -26,7 +26,7 @@ using System.Web.UI.WebControls;
 public partial class _Default : System.Web.UI.Page, System.Web.UI.ICallbackEventHandler
 {
     // Remember 1st!
-    // Change the property settings (Settings.settings) for the following variables:
+    // Change the property settings (Web.config) for the following variables:
     // Your ClientId, Your ClientSecret
     // Your Item id, title, description, image and amount's currency id
     // Site's return urls
@@ -101,7 +101,7 @@ public partial class _Default : System.Web.UI.Page, System.Web.UI.ICallbackEvent
         CheckoutHelper ch = new CheckoutHelper();
 
         // Create token
-        Token token = ch.CreateAccessToken(ConfigurationManager.AppSettings["ClientId"], ConfigurationManager.AppSettings["ClientSecret"]);
+        Token token = AuthHelper.CreateAccessToken(ConfigurationManager.AppSettings["ClientId"], ConfigurationManager.AppSettings["ClientSecret"]);
         ch.AccessToken = token.AccessToken;
 
         // Set item

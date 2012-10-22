@@ -25,7 +25,7 @@ namespace DonationPaymentSample.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("XXXX")]
+        [global::System.Configuration.DefaultSettingValueAttribute("1982")]
         public string ClientId {
             get {
                 return ((string)(this["ClientId"]));
@@ -34,7 +34,7 @@ namespace DonationPaymentSample.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("XXXX")]
+        [global::System.Configuration.DefaultSettingValueAttribute("020Gc1hFJYJQ6ttYqwsl1rs5yIimcHkX")]
         public string ClientSecret {
             get {
                 return ((string)(this["ClientSecret"]));

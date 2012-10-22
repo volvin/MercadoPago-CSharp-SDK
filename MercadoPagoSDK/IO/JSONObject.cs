@@ -185,7 +185,7 @@ namespace MercadoPagoSDK
         /// <summary>
         /// Prints the JSONObject as a formatted string, suitable for viewing.
         /// </summary>
-        public string ToString()
+        public override string ToString()
         {
             StringBuilder sb = new StringBuilder();
             RecursiveObjectToString(this, sb);

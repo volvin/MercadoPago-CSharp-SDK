@@ -1,0 +1,15 @@
+C:\Users\scirielli.ML\MercadoPagoSDK\AccountManagerSample\AccountManagerSample\bin\Release\AccountManagerSample.exe
+C:\Users\scirielli.ML\MercadoPagoSDK\AccountManagerSample\AccountManagerSample\bin\Release\AccountManagerSample.pdb
+C:\Users\scirielli.ML\MercadoPagoSDK\AccountManagerSample\AccountManagerSample\obj\x86\Release\ResolveAssemblyReference.cache
+C:\Users\scirielli.ML\MercadoPagoSDK\AccountManagerSample\AccountManagerSample\obj\x86\Release\Interop.SHDocVw.dll
+C:\Users\scirielli.ML\MercadoPagoSDK\AccountManagerSample\AccountManagerSample\obj\x86\Release\AccountManagerSample.csproj.ResolveComReference.cache
+C:\Users\scirielli.ML\MercadoPagoSDK\AccountManagerSample\AccountManagerSample\obj\x86\Release\AccountManagerSample.MainForm.resources
+C:\Users\scirielli.ML\MercadoPagoSDK\AccountManagerSample\AccountManagerSample\obj\x86\Release\AccountManagerSample.LoginForm.resources
+C:\Users\scirielli.ML\MercadoPagoSDK\AccountManagerSample\AccountManagerSample\obj\x86\Release\AccountManagerSample.Properties.Resources.resources
+C:\Users\scirielli.ML\MercadoPagoSDK\AccountManagerSample\AccountManagerSample\obj\x86\Release\GenerateResource.read.1.tlog
+C:\Users\scirielli.ML\MercadoPagoSDK\AccountManagerSample\AccountManagerSample\obj\x86\Release\GenerateResource.write.1.tlog
+C:\Users\scirielli.ML\MercadoPagoSDK\AccountManagerSample\AccountManagerSample\obj\x86\Release\AccountManagerSample.exe
+C:\Users\scirielli.ML\MercadoPagoSDK\AccountManagerSample\AccountManagerSample\obj\x86\Release\AccountManagerSample.pdb
+C:\Users\scirielli.ML\MercadoPagoSDK\AccountManagerSample\AccountManagerSample\bin\Release\AccountManagerSample.exe.config
+C:\Users\scirielli.ML\MercadoPagoSDK\AccountManagerSample\AccountManagerSample\bin\Release\MercadoPagoSDK.dll
+C:\Users\scirielli.ML\MercadoPagoSDK\AccountManagerSample\AccountManagerSample\bin\Release\MercadoPagoSDK.pdb

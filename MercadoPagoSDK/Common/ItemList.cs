@@ -16,18 +16,14 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace MercadoPagoSDK
 {
     /// <summary>
     /// A representation of the item list resource. 
     /// </summary>
-    public class ItemList : List<Item>
+    public class ItemList
     {
-        // todo: complete hole interface
-
         /// <summary>
         /// Create a new item list instance.
         /// </summary>
@@ -48,7 +44,7 @@ namespace MercadoPagoSDK
         }
 
         /// <summary>
-        /// Add method override. 
+        /// Add method. 
         /// </summary>        
         public void Add(Item item)
         {
@@ -56,7 +52,7 @@ namespace MercadoPagoSDK
         }
 
         /// <summary>
-        /// Count method override. 
+        /// Count method. 
         /// </summary>
         public int Count
         {
@@ -67,7 +63,7 @@ namespace MercadoPagoSDK
         }
 
         /// <summary>
-        /// Remove method override. 
+        /// Remove method. 
         /// </summary>
         public bool Remove(Item item)
         {
@@ -75,7 +71,7 @@ namespace MercadoPagoSDK
         }
 
         /// <summary>
-        /// List item override. 
+        /// List item. 
         /// </summary>
         public Item this[int index]
         {
@@ -95,6 +91,21 @@ namespace MercadoPagoSDK
         public JSONObject ToJSON()
         {
             return _json;
+        }
+
+        /// <summary>
+        /// Returns the item list as a List_Item_ object.
+        /// </summary>
+        public List<Item> ToList()
+        {
+            List<Item> list = new List<Item>();
+
+            for (int index = 0; index <= (_json.Array.Count - 1); index++)
+            {
+                list.Add(new Item(_json.Array[index]));
+            }
+
+            return list;
         }
 
         #region "Private Members"

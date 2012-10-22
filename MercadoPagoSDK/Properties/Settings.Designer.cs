@@ -76,5 +76,35 @@ namespace MercadoPagoSDK.Properties {
                 return ((string)(this["PreferencesUri"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("/mercadopago_account/balance")]
+        public string AccountBalanceUri {
+            get {
+                return ((string)(this["AccountBalanceUri"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("/users")]
+        public string UsersUri {
+            get {
+                return ((string)(this["UsersUri"]));
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("/mercadopago_account/movements/search")]
+        public string MovementsSearchUri {
+            get {
+                return ((string)(this["MovementsSearchUri"]));
+            }
+            set {
+                this["MovementsSearchUri"] = value;
+            }
+        }
     }
 }

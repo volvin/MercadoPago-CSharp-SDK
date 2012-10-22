@@ -23,6 +23,7 @@ using System.IO;
 using System.Net.Security;
 using System.Web;
 using System.Web.Script.Serialization;
+using MercadoPagoSDK.IO;
 
 namespace MercadoPagoSDK
 {
@@ -52,11 +53,31 @@ namespace MercadoPagoSDK
         }
 
         /// <summary>
+        /// The API call event.
+        /// </summary>
+        public event APICallEventHandler APICall;
+
+        /// <summary>
         /// Create a BaseHelper instance.
         /// </summary>
         public BaseHelper()
         {
             _api = new RESTAPI(new Uri(Properties.Settings.Default.ApiBaseUrl));
+            _api.APICall += new APICallEventHandler(OnAPICall);
+        }
+
+        /// <summary>
+        /// Creates a call back with the API call args.
+        /// </summary>
+        /// <param name="e">The API call event</param>
+        protected void OnAPICall(object sender, APICallEventArgs e)
+        {
+            // Fire this event to the next layer
+            if (APICall != null)
+            {
+                // Invokes the delegates. 
+                APICall(this, e);
+            }
         }
 
         /// <summary>

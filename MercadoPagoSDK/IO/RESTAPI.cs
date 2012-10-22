@@ -27,6 +27,7 @@ using System.Net;
 using System.IO;
 using System.Web;
 using System.Web.Script.Serialization;
+using MercadoPagoSDK.IO;
 
 namespace MercadoPagoSDK
 {
@@ -44,6 +45,9 @@ namespace MercadoPagoSDK
         DELETE
     }
 
+    // This is the api call event delegate
+    public delegate void APICallEventHandler(object sender, APICallEventArgs e);
+
     /// <summary>
     /// Generic REST API util. 
     /// </summary>
@@ -53,6 +57,11 @@ namespace MercadoPagoSDK
         /// The access token used to authenticate API calls.
         /// </summary>
         public string AccessToken { get; set; }
+
+        /// <summary>
+        /// The API call event.
+        /// </summary>
+        public event APICallEventHandler APICall;
 
         /// <summary>
         /// Create a new instance of the API
@@ -136,6 +145,19 @@ namespace MercadoPagoSDK
         public JSONObject Put(string relativePath, JSONObject json, ContentType contentType = ContentType.JSON)
         {
             return Call(relativePath, HttpVerb.PUT, null, json, contentType);
+        }
+
+        /// <summary>
+        /// Creates a call back with the API call args.
+        /// </summary>
+        /// <param name="e">The API call event</param>
+        protected virtual void OnAPICall(APICallEventArgs e)
+        {
+            if (APICall != null)
+            {
+                // Invokes the delegates. 
+                APICall(this, e);
+            }
         }
 
         #region "Private Members"
@@ -244,6 +266,7 @@ namespace MercadoPagoSDK
                 requestStream.Close();
             }
 
+            // Resolve the API response
             try
             {
                 using (HttpWebResponse response = request.GetResponse() as HttpWebResponse)
@@ -251,6 +274,16 @@ namespace MercadoPagoSDK
                     // Read response data
                     StreamReader reader = new StreamReader(response.GetResponseStream());
                     string responseBody = reader.ReadToEnd();
+
+                    // Throw the API call event
+                    APICallEventArgs apiCallEvent = new APICallEventArgs();
+                    if (body != null)
+                    {
+                        apiCallEvent.Body = body.ToString();                    
+                    }
+                    apiCallEvent.Response = responseBody;
+                    apiCallEvent.Url = url.ToString();
+                    OnAPICall(apiCallEvent);
 
                     // Understand REST response
                     if (SuccessfulCall(response.StatusCode))

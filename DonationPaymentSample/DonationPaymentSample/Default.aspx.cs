@@ -103,7 +103,7 @@ namespace DonationPaymentSample
             CheckoutHelper ch = new CheckoutHelper();
             
             // Create token
-            Token token = ch.CreateAccessToken(Properties.Settings.Default.ClientId, Properties.Settings.Default.ClientSecret);
+            Token token = AuthHelper.CreateAccessToken(Properties.Settings.Default.ClientId, Properties.Settings.Default.ClientSecret);
             ch.AccessToken = token.AccessToken;
 
             // Set item
@@ -122,15 +122,15 @@ namespace DonationPaymentSample
             preference.BackUrls.Failure = Properties.Settings.Default.FailureUrl;
             preference.BackUrls.Pending = Properties.Settings.Default.PendingUrl;
             preference.BackUrls.Success = Properties.Settings.Default.SuccessUrl;
-            preference.ExternalReference = "my id";  // your id for this transaction
+            preference.ExternalReference = "ext1";  // your id for this transaction
             preference.Items = new ItemList();
             preference.Items.Add(item);
             preference.Payer = new UserEx();
             preference.Payer.Email = email;
-            preference.CustomPaymentChoices = new PaymentChoices();
-            preference.CustomPaymentChoices.ExcludedTypes = new IdList();  // remove ticket and bank transfer options
-            preference.CustomPaymentChoices.ExcludedTypes.Add("ticket");
-            preference.CustomPaymentChoices.ExcludedTypes.Add("bank_transfer");
+            //preference.CustomPaymentChoices = new PaymentChoices();
+            //preference.CustomPaymentChoices.ExcludedTypes = new IdList();  // remove ticket and bank transfer options
+            //preference.CustomPaymentChoices.ExcludedTypes.Add("ticket");
+            //preference.CustomPaymentChoices.ExcludedTypes.Add("bank_transfer");
             
             // Create preference
             preference = ch.CreatePreference(preference);
