@@ -16,6 +16,7 @@
 
 using System;
 using System.Collections.Generic;
+using MercadoPagoSDK.Helpers;
 
 namespace MercadoPagoSDK
 {
@@ -29,7 +30,7 @@ namespace MercadoPagoSDK
         /// </summary>
         public AccountBalance GetAccountBalance(Int32 userId)
         {
-            JSONObject json = _api.Get(Properties.Settings.Default.UsersUri + "/" + userId.ToString() + Properties.Settings.Default.AccountBalanceUri);
+            JSONObject json = _api.Get(SettingsHelper.UsersUri + "/" + userId.ToString() + SettingsHelper.AccountBalanceUri);
             AccountBalance accountBalance = new AccountBalance(json);
 
             return accountBalance;
@@ -40,7 +41,7 @@ namespace MercadoPagoSDK
         /// </summary>
         public SearchPage<Movement> SearchMovements(List<KeyValuePair<string, string>> args)
         {
-            JSONObject json = _api.Get(Properties.Settings.Default.MovementsSearchUri, args);
+            JSONObject json = _api.Get(SettingsHelper.MovementsSearchUri, args);
             SearchPage<Movement> searchPage = SearchPage<Movement>.CreateInstance(json);
 
             return searchPage;

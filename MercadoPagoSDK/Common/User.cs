@@ -134,6 +134,21 @@ namespace MercadoPagoSDK
         }
 
         /// <summary>
+        /// SiteId field.
+        /// </summary>
+        public String SiteId
+        {
+            get
+            {
+                return _json.GetJSONStringAttribute("site_id");
+            }
+            set
+            {
+                _json.SetJSONStringAttribute("site_id", value);
+            }
+        }
+
+        /// <summary>
         /// Returns the user as a json object.
         /// </summary>
         public JSONObject ToJSON()

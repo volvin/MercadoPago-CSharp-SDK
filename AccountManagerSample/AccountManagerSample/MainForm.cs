@@ -317,7 +317,7 @@ namespace AccountManagerSample
         }
 
         /// <summary>
-        /// Do pager logout.
+        /// Do logout.
         /// </summary>
         private void logoutButton_Click(object sender, EventArgs e)
         {

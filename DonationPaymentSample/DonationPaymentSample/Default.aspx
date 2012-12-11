@@ -29,7 +29,7 @@
         Donations
     </h2>
     <p>
-        <asp:Image ID="DonationImage" runat="server" Height="79px" Width="148px" />
+        <asp:Image ID="DonationImage" runat="server" Height="79px" Width="277px" />
         <asp:RadioButton ID="Radio10" runat="server" Checked="True" Font-Bold="True" 
             Font-Size="Large" Text="10" GroupName="Amount" />
         <asp:RadioButton ID="Radio20" runat="server" Font-Bold="True" Font-Size="Large" 

@@ -50,8 +50,16 @@ under the License.
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Sandbox|AnyCPU'">
+    <OutputPath>bin\Sandbox\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;SANDBOX</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <DebugType>full</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
@@ -83,6 +91,7 @@ under the License.
     <Compile Include="Helpers\BaseHelper.cs" />
     <Compile Include="Helpers\CheckoutHelper.cs" />
     <Compile Include="Helpers\AuthHelper.cs" />
+    <Compile Include="Helpers\SettingsHelper.cs" />
     <Compile Include="Helpers\UsersHelper.cs" />
     <Compile Include="Helpers\PaymentsHelper.cs" />
     <Compile Include="IO\APICallEventArgs.cs" />
@@ -100,20 +109,35 @@ under the License.
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="IO\Token.cs" />
     <Compile Include="Common\User.cs" />
-    <Compile Include="Properties\Settings.Designer.cs">
+    <Compile Include="Properties\Release.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
-      <DependentUpon>Settings.settings</DependentUpon>
+      <DependentUpon>Release.settings</DependentUpon>
     </Compile>
+    <Compile Include="Properties\Sandbox.Designer.cs">
+      <DependentUpon>Sandbox.settings</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Settings.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="Properties\Settings.settings">
+    <None Include="Properties\Release.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+      <LastGenOutput>Release.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Properties\Sandbox.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Sandbox.Designer.cs</LastGenOutput>
     </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>if $(ConfigurationName) == 'Debug' xcopy $(ProjectDir)\Release.settings $(ProjectDir)\Properties\Settings.settings /y /f /r
+if $(ConfigurationName) == 'Sandbox' xcopy $(ProjectDir)\Sandbox.settings $(ProjectDir)\Properties\Settings.settings /y /f /r
+if $(ConfigurationName) == 'Release' xcopy $(ProjectDir)\Release.settings $(ProjectDir)\Properties\Settings.settings /y /f /r</PreBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

@@ -24,6 +24,7 @@ using System.Net.Security;
 using System.Web;
 using System.Web.Script.Serialization;
 using MercadoPagoSDK.IO;
+using MercadoPagoSDK.Helpers;
 
 namespace MercadoPagoSDK
 {
@@ -62,7 +63,7 @@ namespace MercadoPagoSDK
         /// </summary>
         public BaseHelper()
         {
-            _api = new RESTAPI(new Uri(Properties.Settings.Default.ApiBaseUrl));
+            _api = new RESTAPI(new Uri(SettingsHelper.ApiBaseUrl));
             _api.APICall += new APICallEventHandler(OnAPICall);
         }
 

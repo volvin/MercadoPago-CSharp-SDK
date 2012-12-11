@@ -17,6 +17,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using MercadoPagoSDK.Helpers;
 
 namespace MercadoPagoSDK
 {
@@ -30,7 +31,7 @@ namespace MercadoPagoSDK
         /// </summary>
 		public User GetUser(Int32 userId)
 		{
-            JSONObject json = _api.Get(Properties.Settings.Default.UsersUri + "/" + userId.ToString());
+            JSONObject json = _api.Get(SettingsHelper.UsersUri + "/" + userId.ToString());
             User user = new User(json);
 
             return user;

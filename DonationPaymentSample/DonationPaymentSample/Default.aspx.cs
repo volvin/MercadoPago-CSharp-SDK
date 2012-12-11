@@ -21,6 +21,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using MercadoPagoSDK.Helpers;
 
 namespace DonationPaymentSample
 {
@@ -101,7 +102,7 @@ namespace DonationPaymentSample
         {
             // Set Checkout Helper
             CheckoutHelper ch = new CheckoutHelper();
-            
+
             // Create token
             Token token = AuthHelper.CreateAccessToken(Properties.Settings.Default.ClientId, Properties.Settings.Default.ClientSecret);
             ch.AccessToken = token.AccessToken;
@@ -122,7 +123,7 @@ namespace DonationPaymentSample
             preference.BackUrls.Failure = Properties.Settings.Default.FailureUrl;
             preference.BackUrls.Pending = Properties.Settings.Default.PendingUrl;
             preference.BackUrls.Success = Properties.Settings.Default.SuccessUrl;
-            preference.ExternalReference = "ext1";  // your id for this transaction
+            preference.ExternalReference = "credit_card-rejected-cc_rejected_call_for_authorize";  // your id for this transaction
             preference.Items = new ItemList();
             preference.Items.Add(item);
             preference.Payer = new UserEx();

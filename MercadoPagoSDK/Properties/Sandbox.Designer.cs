@@ -13,11 +13,11 @@ namespace MercadoPagoSDK.Properties {
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "10.0.0.0")]
-    internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
+    internal sealed partial class Sandbox : global::System.Configuration.ApplicationSettingsBase {
         
-        private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
+        private static Sandbox defaultInstance = ((Sandbox)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Sandbox())));
         
-        public static Settings Default {
+        public static Sandbox Default {
             get {
                 return defaultInstance;
             }
@@ -34,7 +34,7 @@ namespace MercadoPagoSDK.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("/oauth/token")]
+        [global::System.Configuration.DefaultSettingValueAttribute("/sandbox/oauth/token")]
         public string AppSecurityUri {
             get {
                 return ((string)(this["AppSecurityUri"]));
@@ -70,7 +70,7 @@ namespace MercadoPagoSDK.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("/checkout/preferences")]
+        [global::System.Configuration.DefaultSettingValueAttribute("/sandbox/checkout/preferences")]
         public string PreferencesUri {
             get {
                 return ((string)(this["PreferencesUri"]));
@@ -95,15 +95,12 @@ namespace MercadoPagoSDK.Properties {
             }
         }
         
-        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("/mercadopago_account/movements/search")]
         public string MovementsSearchUri {
             get {
                 return ((string)(this["MovementsSearchUri"]));
-            }
-            set {
-                this["MovementsSearchUri"] = value;
             }
         }
     }

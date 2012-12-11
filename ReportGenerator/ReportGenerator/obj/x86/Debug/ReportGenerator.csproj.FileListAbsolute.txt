@@ -1,0 +1,15 @@
+C:\Users\scirielli.ML\MercadoPagoSDK\ReportGenerator\ReportGenerator\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Users\scirielli.ML\MercadoPagoSDK\ReportGenerator\ReportGenerator\obj\x86\Debug\ReportGenerator.Properties.Resources.resources
+C:\Users\scirielli.ML\MercadoPagoSDK\ReportGenerator\ReportGenerator\obj\x86\Debug\GenerateResource.read.1.tlog
+C:\Users\scirielli.ML\MercadoPagoSDK\ReportGenerator\ReportGenerator\obj\x86\Debug\GenerateResource.write.1.tlog
+C:\Users\scirielli.ML\MercadoPagoSDK\ReportGenerator\ReportGenerator\obj\x86\Debug\Interop.SHDocVw.dll
+C:\Users\scirielli.ML\MercadoPagoSDK\ReportGenerator\ReportGenerator\obj\x86\Debug\ReportGenerator.csproj.ResolveComReference.cache
+C:\Users\scirielli.ML\MercadoPagoSDK\ReportGenerator\ReportGenerator\obj\x86\Debug\ReportGenerator.MainForm.resources
+C:\Users\scirielli.ML\MercadoPagoSDK\ReportGenerator\ReportGenerator\bin\Debug\ReportGenerator.exe.config
+C:\Users\scirielli.ML\MercadoPagoSDK\ReportGenerator\ReportGenerator\bin\Debug\ReportGenerator.exe
+C:\Users\scirielli.ML\MercadoPagoSDK\ReportGenerator\ReportGenerator\bin\Debug\ReportGenerator.pdb
+C:\Users\scirielli.ML\MercadoPagoSDK\ReportGenerator\ReportGenerator\bin\Debug\MercadoPagoSDK.dll
+C:\Users\scirielli.ML\MercadoPagoSDK\ReportGenerator\ReportGenerator\bin\Debug\MercadoPagoSDK.pdb
+C:\Users\scirielli.ML\MercadoPagoSDK\ReportGenerator\ReportGenerator\obj\x86\Debug\ReportGenerator.exe
+C:\Users\scirielli.ML\MercadoPagoSDK\ReportGenerator\ReportGenerator\obj\x86\Debug\ReportGenerator.pdb
+C:\Users\scirielli.ML\MercadoPagoSDK\ReportGenerator\ReportGenerator\obj\x86\Debug\ReportGenerator.AdminForm.resources

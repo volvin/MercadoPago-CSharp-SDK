@@ -24,13 +24,13 @@
       <Value Profile="(Default)">http://www.aat.com.ar:86</Value>
     </Setting>
     <Setting Name="ImageUrl" Type="System.String" Scope="Application">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">http://www.redcross.org/images/redcross-logo.png</Value>
     </Setting>
     <Setting Name="Title" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">Some title</Value>
+      <Value Profile="(Default)">Disaster Relief</Value>
     </Setting>
     <Setting Name="Description" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">Some description</Value>
+      <Value Profile="(Default)">You can help people affected by disasters like Superstorm Sandy by making a donation to support American Red Cross Disaster Relief.</Value>
     </Setting>
   </Settings>
 </SettingsFile>

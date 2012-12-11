@@ -24,6 +24,7 @@ using System.Net.Security;
 using System.Security.Cryptography.X509Certificates;
 using System.Web;
 using System.Web.Script.Serialization;
+using MercadoPagoSDK.Helpers;
 
 namespace MercadoPagoSDK
 {
@@ -37,7 +38,7 @@ namespace MercadoPagoSDK
         /// </summary>
         public Preference CreatePreference(Preference preference)
         {
-            JSONObject json = _api.Post(Properties.Settings.Default.PreferencesUri, preference.ToJSON(), ContentType.JSON);
+            JSONObject json = _api.Post(SettingsHelper.PreferencesUri, preference.ToJSON(), ContentType.JSON);
             preference = new Preference(json);
 
             return preference;

@@ -22,17 +22,21 @@ namespace MercadoPagoSDK
 {
     public class RESTAPIException : Exception
     {
-        public string Type { get; set; }
+        public string Cause { get; set; }
+        public string Error { get; set; }
+        public int Status { get; set; }
 
-        public RESTAPIException(string type, string msg)
+        public RESTAPIException(int status, string error, string msg, string cause = "")
             : base(msg) 
         {
-            Type = type;
+            Cause = cause;
+            Error = error;
+            Status = status;
         }
 
         public override string ToString()
         {
-            return Type + ": " + base.ToString();
+            return Status.ToString() + ": " + Error + "; Message: " + base.ToString() + "; Cause: " + Cause;
         }
 
         public RESTAPIException()

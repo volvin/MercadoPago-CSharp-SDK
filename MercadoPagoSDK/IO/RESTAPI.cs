@@ -298,7 +298,18 @@ namespace MercadoPagoSDK
                         {
                             // Try throwing a well-formed api error
                             JSONObject errorBody = JSONObject.CreateFromString(responseBody);
-                            throw new RESTAPIException(errorBody.Dictionary["error"].Dictionary["type"].String, errorBody.Dictionary["error"].Dictionary["message"].String);
+                            int status = Convert.ToInt16(errorBody.Dictionary["status"].String);
+                            string error = errorBody.Dictionary["error"].String;
+                            string message = errorBody.Dictionary["message"].String;
+                            // optional: cause
+                            string cause = "";
+                            try
+                            {
+                                cause = errorBody.Dictionary["cause"].Dictionary["message"].String;
+                            }
+                            catch
+                            { }
+                            throw new RESTAPIException(status, error, message, cause);
                         }
                         catch (RESTAPIException restEx)
                         {
@@ -306,14 +317,14 @@ namespace MercadoPagoSDK
                         }
                         catch
                         {
-                            throw new RESTAPIException(response.StatusCode.ToString(), responseBody);  // this is not a well-formed message
+                            throw new RESTAPIException(Convert.ToInt16(response.StatusCode.ToString()), "", responseBody);  // this is not a well-formed message
                         }
                     }
                 }
             }
             catch (WebException e)
             {
-                throw new RESTAPIException("Server Error", e.Message);
+                throw new RESTAPIException(999, "Server Error", e.Message);
             }
         }
 

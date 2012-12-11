@@ -1,0 +1,7 @@
+C:\Users\scirielli.ML\MercadoPagoSDK\DonationPaymentSample\DonationPaymentSample\bin\DonationPaymentSample.dll
+C:\Users\scirielli.ML\MercadoPagoSDK\DonationPaymentSample\DonationPaymentSample\bin\MercadoPagoSDK.dll
+C:\Users\scirielli.ML\MercadoPagoSDK\DonationPaymentSample\DonationPaymentSample\obj\Sandbox\ResolveAssemblyReference.cache
+C:\Users\scirielli.ML\MercadoPagoSDK\DonationPaymentSample\DonationPaymentSample\obj\Sandbox\DonationPaymentSample.dll
+C:\Users\scirielli.ML\MercadoPagoSDK\DonationPaymentSample\DonationPaymentSample\bin\DonationPaymentSample.pdb
+C:\Users\scirielli.ML\MercadoPagoSDK\DonationPaymentSample\DonationPaymentSample\obj\Sandbox\DonationPaymentSample.pdb
+C:\Users\scirielli.ML\MercadoPagoSDK\DonationPaymentSample\DonationPaymentSample\bin\MercadoPagoSDK.pdb

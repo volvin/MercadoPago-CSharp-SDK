@@ -88,7 +88,7 @@ namespace DonationPaymentSample.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        [global::System.Configuration.DefaultSettingValueAttribute("http://www.redcross.org/images/redcross-logo.png")]
         public string ImageUrl {
             get {
                 return ((string)(this["ImageUrl"]));
@@ -97,7 +97,7 @@ namespace DonationPaymentSample.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Some title")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Disaster Relief")]
         public string Title {
             get {
                 return ((string)(this["Title"]));
@@ -106,7 +106,8 @@ namespace DonationPaymentSample.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Some description")]
+        [global::System.Configuration.DefaultSettingValueAttribute("You can help people affected by disasters like Superstorm Sandy by making a donat" +
+            "ion to support American Red Cross Disaster Relief.")]
         public string Description {
             get {
                 return ((string)(this["Description"]));

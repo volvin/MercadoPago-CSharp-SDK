@@ -23,6 +23,7 @@ using System.IO;
 using System.Net.Security;
 using System.Web;
 using System.Web.Script.Serialization;
+using MercadoPagoSDK.Helpers;
 
 namespace MercadoPagoSDK
 {
@@ -43,8 +44,8 @@ namespace MercadoPagoSDK
             credential.GrantType = "client_credentials";
 
             // Create token
-            RESTAPI api = new RESTAPI(new Uri(Properties.Settings.Default.ApiBaseUrl));
-            JSONObject json = api.Post(Properties.Settings.Default.AppSecurityUri, credential.ToJSON(), ContentType.HTTP);
+            RESTAPI api = new RESTAPI(new Uri(SettingsHelper.ApiBaseUrl));
+            JSONObject json = api.Post(SettingsHelper.AppSecurityUri, credential.ToJSON(), ContentType.HTTP);
             Token token = new Token(json);
 
             return token;

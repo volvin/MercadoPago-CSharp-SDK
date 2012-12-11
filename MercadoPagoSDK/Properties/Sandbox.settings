@@ -1,12 +1,12 @@
 ﻿<?xml version='1.0' encoding='utf-8'?>
-<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="MercadoPagoSDK.Properties" GeneratedClassName="Settings">
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="MercadoPagoSDK.Properties" GeneratedClassName="Sandbox">
   <Profiles />
   <Settings>
     <Setting Name="ApiBaseUrl" Type="System.String" Scope="Application">
       <Value Profile="(Default)">https://api.mercadolibre.com</Value>
     </Setting>
     <Setting Name="AppSecurityUri" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">/oauth/token</Value>
+      <Value Profile="(Default)">/sandbox/oauth/token</Value>
     </Setting>
     <Setting Name="CollectionsUri" Type="System.String" Scope="Application">
       <Value Profile="(Default)">/collections</Value>
@@ -18,7 +18,7 @@
       <Value Profile="(Default)">/collections/search</Value>
     </Setting>
     <Setting Name="PreferencesUri" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">/checkout/preferences</Value>
+      <Value Profile="(Default)">/sandbox/checkout/preferences</Value>
     </Setting>
     <Setting Name="AccountBalanceUri" Type="System.String" Scope="Application">
       <Value Profile="(Default)">/mercadopago_account/balance</Value>
@@ -26,7 +26,7 @@
     <Setting Name="UsersUri" Type="System.String" Scope="Application">
       <Value Profile="(Default)">/users</Value>
     </Setting>
-    <Setting Name="MovementsSearchUri" Type="System.String" Scope="User">
+    <Setting Name="MovementsSearchUri" Type="System.String" Scope="Application">
       <Value Profile="(Default)">/mercadopago_account/movements/search</Value>
     </Setting>
   </Settings>

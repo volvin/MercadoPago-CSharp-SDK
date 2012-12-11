@@ -18,6 +18,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using MercadoPagoSDK.Helpers;
 
 namespace MercadoPagoSDK
 {
@@ -45,7 +46,7 @@ namespace MercadoPagoSDK
         /// </summary>
         public CollectionNotification GetCollectionNotification(Int32 collectionNotificationId)
         {
-            JSONObject json = _api.Get(Properties.Settings.Default.CollectionsNotificationsUri + "/" + collectionNotificationId.ToString());
+            JSONObject json = _api.Get(SettingsHelper.CollectionsNotificationsUri + "/" + collectionNotificationId.ToString());
             CollectionNotification notification = new CollectionNotification(json);
 
             return notification;
@@ -56,7 +57,7 @@ namespace MercadoPagoSDK
         /// </summary>
         public SearchPage<Collection> SearchCollections(List<KeyValuePair<string, string>> args)
         {
-            JSONObject json = _api.Get(Properties.Settings.Default.CollectionsSearchUri, args);
+            JSONObject json = _api.Get(SettingsHelper.CollectionsSearchUri, args);
             SearchPage<Collection> searchPage = SearchPage<Collection>.CreateInstance(json);
 
             return searchPage;
@@ -67,7 +68,7 @@ namespace MercadoPagoSDK
         /// </summary>
         public Collection UpdateCollection(Collection collection)
         {
-            JSONObject json = _api.Put(Properties.Settings.Default.CollectionsUri + "/" + collection.Id.ToString(), collection.ToJSON(), ContentType.JSON);
+            JSONObject json = _api.Put(SettingsHelper.CollectionsUri + "/" + collection.Id.ToString(), collection.ToJSON(), ContentType.JSON);
             Collection updatedCollection = new Collection(json);
 
             return updatedCollection;
