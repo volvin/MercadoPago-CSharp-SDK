@@ -19,9 +19,10 @@ namespace ReportGenerator
             InitializeComponent();
         }
 
-        private const int API_QUERY_PAGE_SIZE = 50;
+        private const int API_QUERY_PAGE_SIZE = 1000;
         private OAuthResponse _authorization;
         private AdminForm _adminForm = null;
+        private bool _continue = true;
         private LoginForm _loginForm = null;
 
         /// <summary>
@@ -45,7 +46,7 @@ namespace ReportGenerator
 
                 // Hide login form and enable main form buttons
                 _loginForm.Hide();
-                EnableControls();
+                EnableLoginControls();
             }
             catch (Exception ex)
             {
@@ -81,7 +82,7 @@ namespace ReportGenerator
 
                 // Hide admin form and enable main form buttons
                 _adminForm.Hide();
-                EnableControls();
+                EnableLoginControls();
             }
             catch
             {
@@ -96,26 +97,40 @@ namespace ReportGenerator
         {
             // Reset authorization, form controls and values
             saluteLabel.Text = "";
-            DisableControls();
+            DisableLoginControls();
             _authorization = null;
 
             this.Cursor = Cursors.Default;
         }
 
-        private void EnableControls()
+        private void EnableGenerateControls()
         {
-            adminAccessButton.Enabled = false;
-            loginButton.Enabled = false;
             generateButton.Enabled = true;
-            logoutButton.Enabled = true;        
+            abortButton.Enabled = false;
+            abortButton.BackColor = Color.White;
         }
 
-        private void DisableControls()
+        private void EnableLoginControls()
         {
-            adminAccessButton.Enabled = true;
-            loginButton.Enabled = true;
+            loginButton.Enabled = false;
+            logoutButton.Enabled = true;
+            EnableGenerateControls();
+        }
+
+        private void DisableGenerateControls()
+        {
             generateButton.Enabled = false;
+            abortButton.Enabled = true;
+            abortButton.BackColor = Color.Red;
+        }
+
+        private void DisableLoginControls()
+        {
+            loginButton.Enabled = true;
             logoutButton.Enabled = false;
+            generateButton.Enabled = false;
+            abortButton.Enabled = false;
+            abortButton.BackColor = Color.White;
         }
 
         private void loginButton_Click(object sender, EventArgs e)
@@ -135,6 +150,28 @@ namespace ReportGenerator
 
         private void generateButton_Click(object sender, EventArgs e)
         {
+            // Reset controls
+            DisableGenerateControls();
+            progressBar.Value = 0;
+            progressLabel.Text = "";
+
+            Thread workerThread = new Thread(DoWork);
+
+            // Start the worker thread.
+            _continue = true;  // reset abort flag
+            workerThread.Start();
+            Console.WriteLine("main thread: Starting worker thread...");
+
+            // Loop until worker thread activates.
+            while (!workerThread.IsAlive) ;
+
+            // Put the main thread to sleep for 1 millisecond to
+            // allow the worker thread to do some work:
+            Thread.Sleep(1);
+        }
+
+        private void DoWork()
+        {
             List<Collection> collections = null;
             SearchPage<Collection> collectionsPage = null;
             string fileExtension = "";
@@ -143,8 +180,6 @@ namespace ReportGenerator
             int offset = 0;
             ReportFormats reportFormat;
             ReportTypes reportType;
-
-            generateButton.Enabled = false;
 
             // Define file extension and report format
             if (excelRadioButton.Checked)
@@ -159,8 +194,6 @@ namespace ReportGenerator
             }
 
             // Set progress bar max value
-            progressBar.Value = 0;
-            progressLabel.Text = "";
 
             //Search the API
             try
@@ -170,14 +203,14 @@ namespace ReportGenerator
                     reportType = ReportTypes.CollectionsReport;
                     collectionsPage = BackendHelper.GetCollectionsPage(offset, API_QUERY_PAGE_SIZE, _authorization, reportFromPicker.Value, reportToPicker.Value);
                     collections = collectionsPage.Results;
-                    progressBar.Maximum = collectionsPage.Total.Value;
+                    progressBar.Invoke(new UpdateProgressBarMaximumCallback(this.UpdateProgressBarMaximum), new object[] { collectionsPage.Total.Value });
                 }
-                else 
+                else
                 {
                     reportType = ReportTypes.MovementsReport;
                     movementsPage = BackendHelper.GetMovementsPage(offset, API_QUERY_PAGE_SIZE, _authorization, reportFromPicker.Value, reportToPicker.Value);
                     movements = movementsPage.Results;
-                    progressBar.Maximum = movementsPage.Total.Value;
+                    progressBar.Invoke(new UpdateProgressBarMaximumCallback(this.UpdateProgressBarMaximum), new object[] { movementsPage.Total.Value });
                 }
                 offset += API_QUERY_PAGE_SIZE;
             }
@@ -208,6 +241,7 @@ namespace ReportGenerator
             // Set Report Writter
             ReportWritter reportWritter = ReportWritterFactory.GetReportWritter(file, reportFormat);
             reportWritter.ProgressBar = progressBar;
+            reportWritter.ProgressText = progressLabel;
 
             // Write report header
             reportWritter.WriteHeader(reportType, progressBar.Maximum);
@@ -218,7 +252,7 @@ namespace ReportGenerator
                 reportWritter.WriteCollections(collections);
 
                 // loop for more collections pages
-                while (collectionsPage.Total.Value > offset)
+                while (collectionsPage.Total.Value > offset && _continue)
                 {
                     collectionsPage = BackendHelper.GetCollectionsPage(offset, API_QUERY_PAGE_SIZE, _authorization, reportFromPicker.Value, reportToPicker.Value);
                     collections = collectionsPage.Results;
@@ -232,7 +266,7 @@ namespace ReportGenerator
                 reportWritter.WriteMovements(movements);
 
                 // loop for more movements pages
-                while (movementsPage.Total.Value > offset)
+                while (movementsPage.Total.Value > offset && _continue)
                 {
                     movementsPage = BackendHelper.GetMovementsPage(offset, API_QUERY_PAGE_SIZE, _authorization, reportFromPicker.Value, reportToPicker.Value);
                     movements = movementsPage.Results;
@@ -243,90 +277,28 @@ namespace ReportGenerator
 
             // Write report footer
             reportWritter.WriteFooter();
- 
+
             // Close the file
             file.Close();
 
             // Finish
-            MessageBox.Show("Done!");
-            generateButton.Enabled = true;
+            progressBar.Invoke(new UpdateProgressBarFinishedCallback(this.UpdateProgressBarFinished), null);
         }
-        /*
-        private SearchPage<Collection> GetCollectionsPage(Int32 offset, Int32 limit)
+
+        public delegate void UpdateProgressBarFinishedCallback();
+        public delegate void UpdateProgressBarMaximumCallback(int maximum);
+
+        private void UpdateProgressBarMaximum(int maximum)
         {
-            PaymentsHelper ph = new PaymentsHelper();
-
-            // Set access token and hook API call event
-            ph.AccessToken = _authorization.AccessToken;
-            //ah.APICall += new APICallEventHandler(OnAPICall);
-
-            // Prepare API call arguments
-            List<KeyValuePair<string, string>> args = new List<KeyValuePair<string, string>>();
-            if (_authorization.IsAdmin)
-            {
-                args.Add(new KeyValuePair<string, string>("collector_id", _authorization.UserId.ToString()));            
-            }
-            args.Add(new KeyValuePair<string, string>("sort", "date_created"));
-            args.Add(new KeyValuePair<string, string>("criteria", "desc"));
-            args.Add(new KeyValuePair<string, string>("offset", offset.ToString()));
-            args.Add(new KeyValuePair<string, string>("limit", limit.ToString()));
-            args.Add(new KeyValuePair<string, string>("range", "date_created"));
-            args.Add(new KeyValuePair<string, string>("begin_date", HttpUtility.UrlEncode(reportFromPicker.Value.GetDateTimeFormats('s')[0].ToString() + ".000Z")));
-            args.Add(new KeyValuePair<string, string>("end_date", HttpUtility.UrlEncode(reportToPicker.Value.GetDateTimeFormats('s')[0].ToString() + ".000Z")));
-
-            // Call API
-            this.Cursor = Cursors.WaitCursor;
-            SearchPage<Collection> searchPage = null;
-            try
-            {
-                searchPage = ph.SearchCollections(args);
-            }
-            catch (RESTAPIException raex)
-            {
-                this.Cursor = Cursors.Default;
-                throw raex;
-            }
-            this.Cursor = Cursors.Default;
-
-            return searchPage;
+            progressBar.Maximum = maximum;
         }
 
-        private SearchPage<Movement> GetMovementsPage(Int32 offset, Int32 limit)
-        { 
-            AccountsHelper ah = new AccountsHelper();
-
-            // Set access token and hook API call event
-            ah.AccessToken = _authorization.AccessToken;
-            //ah.APICall += new APICallEventHandler(OnAPICall);
-
-            // Prepare API call arguments
-            List<KeyValuePair<string, string>> args = new List<KeyValuePair<string, string>>();
-            if (_authorization.IsAdmin)
-            {
-                args.Add(new KeyValuePair<string, string>("user_id", _authorization.UserId.ToString()));
-            }
-            args.Add(new KeyValuePair<string, string>("sort", "date_created"));
-            args.Add(new KeyValuePair<string, string>("criteria", "desc"));
-            args.Add(new KeyValuePair<string, string>("offset", offset.ToString()));
-            args.Add(new KeyValuePair<string, string>("limit", limit.ToString()));
-            args.Add(new KeyValuePair<string, string>("range", "date_created"));
-            args.Add(new KeyValuePair<string, string>("begin_date", HttpUtility.UrlEncode(reportFromPicker.Value.GetDateTimeFormats('s')[0].ToString() + ".000Z")));
-            args.Add(new KeyValuePair<string, string>("end_date", HttpUtility.UrlEncode(reportToPicker.Value.GetDateTimeFormats('s')[0].ToString() + ".000Z")));
-
-            // Call API
-            SearchPage<Movement> searchPage = null;
-            try
-            {
-                searchPage = ah.SearchMovements(args);
-            }
-            catch (RESTAPIException raex)
-            {
-                throw raex;
-            }
-
-            return searchPage;
+        private void UpdateProgressBarFinished()
+        {
+            progressLabel.Text = "Finished! Processed " + progressLabel.Text;
+            EnableGenerateControls();
         }
-        */
+
         /// <summary>
         /// Do logout.
         /// </summary>
@@ -384,7 +356,7 @@ namespace ReportGenerator
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            DisableControls();
+            DisableLoginControls();
             reportFromPicker.Value = DateTime.Now.AddDays(-30);
             reportToPicker.Value = DateTime.Now;
             folderTextBox.Text = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
@@ -404,11 +376,19 @@ namespace ReportGenerator
             }
         }
 
-        private void adminAccessButton_Click(object sender, EventArgs e)
+        private void MainForm_KeyUp(object sender, KeyEventArgs e)
         {
-            _adminForm = new AdminForm();
-            _adminForm.FirstForm = this;
-            _adminForm.ShowDialog();
+            if (e.Control && e.Alt && e.KeyCode == Keys.A && _authorization == null)
+            {
+                _adminForm = new AdminForm();
+                _adminForm.FirstForm = this;
+                _adminForm.ShowDialog();
+            }
+        }
+
+        private void abortButton_Click(object sender, EventArgs e)
+        {
+            _continue = false;
         }
     }
 }

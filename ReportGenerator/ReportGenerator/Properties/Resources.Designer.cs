@@ -60,20 +60,6 @@ namespace ReportGenerator.Properties {
             }
         }
         
-        internal static System.Drawing.Bitmap golden_star {
-            get {
-                object obj = ResourceManager.GetObject("golden_star", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        internal static System.Drawing.Bitmap golden_star1 {
-            get {
-                object obj = ResourceManager.GetObject("golden_star1", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
         internal static System.Drawing.Bitmap LogoMercadoPago_es {
             get {
                 object obj = ResourceManager.GetObject("LogoMercadoPago_es", resourceCulture);

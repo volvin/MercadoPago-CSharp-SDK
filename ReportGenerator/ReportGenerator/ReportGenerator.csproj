@@ -57,6 +57,7 @@
     <Compile Include="BackendHelper.cs" />
     <Compile Include="CSVWritter.cs" />
     <Compile Include="ExcelWritter.cs" />
+    <Compile Include="LogHelper.cs" />
     <Compile Include="LoginForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -120,9 +121,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\LogoMercadoPago_es.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\golden_star.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

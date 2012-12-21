@@ -38,6 +38,9 @@
             this.movementsRadioButton = new System.Windows.Forms.RadioButton();
             this.collectionsRadioButton = new System.Windows.Forms.RadioButton();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.csvRadioButton = new System.Windows.Forms.RadioButton();
+            this.excelRadioButton = new System.Windows.Forms.RadioButton();
+            this.label5 = new System.Windows.Forms.Label();
             this.openGetFolderDialogButton = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -48,16 +51,12 @@
             this.label1 = new System.Windows.Forms.Label();
             this.reportToPicker = new System.Windows.Forms.DateTimePicker();
             this.reportFromPicker = new System.Windows.Forms.DateTimePicker();
-            this.adminAccessButton = new System.Windows.Forms.PictureBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.progressLabel = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.excelRadioButton = new System.Windows.Forms.RadioButton();
-            this.csvRadioButton = new System.Windows.Forms.RadioButton();
+            this.abortButton = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.adminAccessButton)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -167,6 +166,37 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Target File";
             // 
+            // csvRadioButton
+            // 
+            this.csvRadioButton.AutoSize = true;
+            this.csvRadioButton.Location = new System.Drawing.Point(201, 96);
+            this.csvRadioButton.Name = "csvRadioButton";
+            this.csvRadioButton.Size = new System.Drawing.Size(46, 17);
+            this.csvRadioButton.TabIndex = 47;
+            this.csvRadioButton.Text = "CSV";
+            this.csvRadioButton.UseVisualStyleBackColor = true;
+            // 
+            // excelRadioButton
+            // 
+            this.excelRadioButton.AutoSize = true;
+            this.excelRadioButton.Checked = true;
+            this.excelRadioButton.Location = new System.Drawing.Point(124, 96);
+            this.excelRadioButton.Name = "excelRadioButton";
+            this.excelRadioButton.Size = new System.Drawing.Size(51, 17);
+            this.excelRadioButton.TabIndex = 46;
+            this.excelRadioButton.TabStop = true;
+            this.excelRadioButton.Text = "Excel";
+            this.excelRadioButton.UseVisualStyleBackColor = true;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(19, 96);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(77, 13);
+            this.label5.TabIndex = 45;
+            this.label5.Text = "Report Format:";
+            // 
             // openGetFolderDialogButton
             // 
             this.openGetFolderDialogButton.Location = new System.Drawing.Point(355, 40);
@@ -258,16 +288,6 @@
             this.reportFromPicker.Size = new System.Drawing.Size(130, 20);
             this.reportFromPicker.TabIndex = 35;
             // 
-            // adminAccessButton
-            // 
-            this.adminAccessButton.Image = global::ReportGenerator.Properties.Resources.golden_star1;
-            this.adminAccessButton.Location = new System.Drawing.Point(229, 112);
-            this.adminAccessButton.Name = "adminAccessButton";
-            this.adminAccessButton.Size = new System.Drawing.Size(29, 30);
-            this.adminAccessButton.TabIndex = 44;
-            this.adminAccessButton.TabStop = false;
-            this.adminAccessButton.Click += new System.EventHandler(this.adminAccessButton_Click);
-            // 
             // pictureBox1
             // 
             this.pictureBox1.Image = global::ReportGenerator.Properties.Resources.LogoMercadoPago_es;
@@ -287,36 +307,16 @@
             this.progressLabel.TabIndex = 45;
             this.progressLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // label5
+            // abortButton
             // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(19, 96);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(77, 13);
-            this.label5.TabIndex = 45;
-            this.label5.Text = "Report Format:";
-            // 
-            // excelRadioButton
-            // 
-            this.excelRadioButton.AutoSize = true;
-            this.excelRadioButton.Checked = true;
-            this.excelRadioButton.Location = new System.Drawing.Point(124, 96);
-            this.excelRadioButton.Name = "excelRadioButton";
-            this.excelRadioButton.Size = new System.Drawing.Size(51, 17);
-            this.excelRadioButton.TabIndex = 46;
-            this.excelRadioButton.TabStop = true;
-            this.excelRadioButton.Text = "Excel";
-            this.excelRadioButton.UseVisualStyleBackColor = true;
-            // 
-            // csvRadioButton
-            // 
-            this.csvRadioButton.AutoSize = true;
-            this.csvRadioButton.Location = new System.Drawing.Point(201, 96);
-            this.csvRadioButton.Name = "csvRadioButton";
-            this.csvRadioButton.Size = new System.Drawing.Size(46, 17);
-            this.csvRadioButton.TabIndex = 47;
-            this.csvRadioButton.Text = "CSV";
-            this.csvRadioButton.UseVisualStyleBackColor = true;
+            this.abortButton.BackColor = System.Drawing.Color.White;
+            this.abortButton.Location = new System.Drawing.Point(148, 224);
+            this.abortButton.Name = "abortButton";
+            this.abortButton.Size = new System.Drawing.Size(75, 23);
+            this.abortButton.TabIndex = 46;
+            this.abortButton.Text = "Abort";
+            this.abortButton.UseVisualStyleBackColor = false;
+            this.abortButton.Click += new System.EventHandler(this.abortButton_Click);
             // 
             // MainForm
             // 
@@ -324,8 +324,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(730, 491);
+            this.Controls.Add(this.abortButton);
             this.Controls.Add(this.progressLabel);
-            this.Controls.Add(this.adminAccessButton);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
@@ -337,17 +337,18 @@
             this.Controls.Add(this.generateButton);
             this.Controls.Add(this.loginButton);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.KeyPreview = true;
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "MercadoPago Report Generator";
             this.Load += new System.EventHandler(this.MainForm_Load);
+            this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.MainForm_KeyUp);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.adminAccessButton)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -377,11 +378,11 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button openGetFolderDialogButton;
-        private System.Windows.Forms.PictureBox adminAccessButton;
         private System.Windows.Forms.Label progressLabel;
         private System.Windows.Forms.RadioButton csvRadioButton;
         private System.Windows.Forms.RadioButton excelRadioButton;
         private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Button abortButton;
     }
 }
 

@@ -23,27 +23,31 @@ namespace ReportGenerator
             {
                 string reportLine = "";
 
-                reportLine += EncodeString(collection.DateCreated.ToString()) + ",";
-                reportLine += EncodeString(collection.Id.ToString()) + ",";
-                reportLine += EncodeString(collection.ExternalReference) + ",";
+                reportLine += EncodeString(collection.DateCreated) + ",";
+                reportLine += EncodeString(collection.LastModified) + ",";
+                reportLine += EncodeString(collection.OperationType) + ",";
+                reportLine += EncodeString(collection.Payer.Email) + ",";
+                reportLine += EncodeString(collection.Payer.Nickname) + ",";
+                reportLine += EncodeString(collection.Payer.FirstName) + " " + EncodeString(collection.Payer.LastName) + ",";
+                reportLine += EncodeString(collection.Reason) + ",";
+                reportLine += EncodeString(collection.TotalPaidAmount) + ",";
+                reportLine += EncodeString(collection.ShippingCost) + ",";
+                reportLine += EncodeString(collection.TransactionAmount) + ",";
+                reportLine += EncodeString(collection.MercadoPagoFee) + ",";
                 reportLine += EncodeString(collection.Status) + ",";
                 reportLine += EncodeString(collection.StatusDetail) + ",";
-                reportLine += EncodeString(collection.OperationType) + ",";
-                reportLine += EncodeString(collection.PaymentType) + ",";
-                reportLine += EncodeString(collection.LastModified.ToString()) + ",";
-                reportLine += EncodeString(collection.Reason) + ",";
-                reportLine += EncodeString(collection.TransactionAmount.ToString().Replace(",", ".")) + ",";
-                reportLine += EncodeString(collection.ShippingCost.ToString().Replace(",", ".")) + ",";
-                reportLine += EncodeString(collection.TotalPaidAmount.ToString().Replace(",", ".")) + ",";
-                reportLine += EncodeString(collection.Payer.Nickname) + ",";
-                reportLine += EncodeString(collection.Payer.Email);
+                reportLine += EncodeString(collection.Id) + ",";
+                reportLine += EncodeString(collection.ExternalReference) + ",";
+                reportLine += EncodeString(collection.MoneyReleaseDate) + ",";
+                reportLine += EncodeString(collection.PaymentType);
 
                 _file.WriteLine(reportLine);
                 try
                 {
                     if (_progressBar != null)
                     {
-                        _progressBar.Value += 1;
+                        _progressBar.Invoke(new IncreaseProgressBarValueCallback(this.IncreaseProgressBarValue), null);
+                        _progressBar.Invoke(new UpdateProgressTextValueCallback(this.UpdateProgressTextValue), new object[] { _progressBar.Value.ToString() + " of " + _progressBar.Maximum.ToString() });
                     }
                 }
                 catch
@@ -58,17 +62,20 @@ namespace ReportGenerator
             {
                 string reportLine = "";
 
-                reportLine += movement.DateCreated.ToString() + ",";
-                reportLine += movement.Detail + ",";
-                reportLine += movement.Amount.ToString().Replace(",", ".") + ",";
-                reportLine += movement.BalancedAmount.ToString().Replace(",", ".");
+                reportLine += EncodeString(movement.DateCreated) + ",";
+                reportLine += EncodeString(movement.Detail) + ",";
+                reportLine += EncodeString(movement.Id) + ",";
+                reportLine += EncodeString(movement.ReferenceId) + ",";
+                reportLine += EncodeString(movement.Amount) + ",";
+                reportLine += EncodeString(movement.BalancedAmount);
 
                 _file.WriteLine(reportLine);
                 try
                 {
                     if (_progressBar != null)
                     {
-                        _progressBar.Value += 1;
+                        _progressBar.Invoke(new IncreaseProgressBarValueCallback(this.IncreaseProgressBarValue), null);
+                        _progressBar.Invoke(new UpdateProgressTextValueCallback(this.UpdateProgressTextValue), new object[] { _progressBar.Value.ToString() + " of " + _progressBar.Maximum.ToString() });
                     }
                 }
                 catch
@@ -83,22 +90,100 @@ namespace ReportGenerator
         }
 
         public override void WriteHeader(ReportTypes reportType, int numberOfRows = 0)
-        { 
-            // Do nothing
-        }
-
-        private string EncodeString(string text)
         {
-            string result = "";
-            if (text != null)
+            if (reportType == ReportTypes.CollectionsReport)
             {
-                result = text.Replace(",", "#");
+                _file.WriteLine(GetCollectionReportHeader());
             }
             else
             {
-                result = "";
+                _file.WriteLine(GetMovementReportHeader());
             }
-            return result;
+        }
+
+        private string GetCollectionReportHeader()
+        {
+            string fileHeader = "";
+            fileHeader += "Date,";
+            fileHeader += "Last Modified Date,";
+            fileHeader += "Operation Type,";
+            fileHeader += "Buyer Email,";
+            fileHeader += "Buyer Nickname,";
+            fileHeader += "Buyer Name,";
+            fileHeader += "Description,";
+            fileHeader += "Total Paid Amount,";
+            fileHeader += "Shipping Cost,";
+            fileHeader += "Transaction Amount,";
+            fileHeader += "MercadoPago Fee,";
+            fileHeader += "Status,";
+            fileHeader += "Status Detail,";
+            fileHeader += "Payment Id,";
+            fileHeader += "External Reference,";
+            fileHeader += "Money Release Date,";
+            fileHeader += "Payment Type";
+
+            return fileHeader;
+        }
+
+        private string GetMovementReportHeader()
+        {
+            string fileHeader = "";
+            fileHeader += "Date,";
+            fileHeader += "Detail,";
+            fileHeader += "Movement Id,";
+            fileHeader += "Reference Id,";
+            fileHeader += "Amount,";
+            fileHeader += "Balanced Amount";
+
+            return fileHeader;
+        }
+
+        private string EncodeString(String text)
+        {
+            if (text != null)
+            {
+                return text.Replace(",", "#");
+            }
+            else
+            {
+                return String.Empty;
+            }
+        }
+
+        private string EncodeString(DateTime? date)
+        {
+            if (date != null)
+            {
+                return date.ToString().Replace(",", "#");
+            }
+            else
+            {
+                return String.Empty;
+            }
+        }
+
+        private string EncodeString(Int32? number)
+        {
+            if (number != null)
+            {
+                return number.ToString().Replace(",", ".");
+            }
+            else
+            {
+                return String.Empty;
+            }
+        }
+
+        private string EncodeString(float? number)
+        {
+            if (number != null)
+            {
+                return number.ToString().Replace(",", ".");
+            }
+            else
+            {
+                return String.Empty;
+            }
         }
     }
 }

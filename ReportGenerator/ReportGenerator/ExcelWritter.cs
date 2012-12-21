@@ -27,20 +27,23 @@ namespace ReportGenerator
                 string reportLine = "";
 
                 reportLine += "<Row ss:AutoFitHeight=\"0\">";
-                reportLine += "    <Cell ss:Index=\"2\" ss:StyleID=\"s67\"><Data ss:Type=\"String\">" + collection.DateCreated.ToString() + "</Data></Cell>";
-                reportLine += "    <Cell ss:StyleID=\"s68\"><Data ss:Type=\"Number\">" + collection.Id.ToString() + "</Data></Cell>";
-                reportLine += "    <Cell ss:StyleID=\"Default\"><Data ss:Type=\"String\">" + collection.ExternalReference + "</Data></Cell>";
-                reportLine += "    <Cell><Data ss:Type=\"String\">" + collection.Status + "</Data></Cell>";
-                reportLine += "    <Cell><Data ss:Type=\"String\">" + collection.StatusDetail + "</Data></Cell>";
-                reportLine += "    <Cell><Data ss:Type=\"String\">" + collection.OperationType + "</Data></Cell>";
-                reportLine += "    <Cell><Data ss:Type=\"String\">" + collection.PaymentType + "</Data></Cell>";  // TODO
-                reportLine += "    <Cell ss:StyleID=\"s67\"><Data ss:Type=\"String\">" + collection.LastModified.ToString() + "</Data></Cell>";
-                reportLine += "    <Cell ss:StyleID=\"s75\"><Data ss:Type=\"String\">" + collection.Reason + "</Data></Cell>";
-                reportLine += "    <Cell><Data ss:Type=\"Number\">" + collection.TransactionAmount.ToString().Replace(",", ".") + "</Data></Cell>";
-                reportLine += "    <Cell><Data ss:Type=\"Number\">" + collection.ShippingCost.ToString().Replace(",", ".") + "</Data></Cell>";
-                reportLine += "    <Cell><Data ss:Type=\"Number\">" + collection.TotalPaidAmount.ToString().Replace(",", ".") + "</Data></Cell>";
-                reportLine += "    <Cell ss:StyleID=\"s75\"><Data ss:Type=\"String\">" + collection.Payer.Nickname + "</Data></Cell>";
-                reportLine += "    <Cell ss:StyleID=\"s79\"><Data ss:Type=\"String\">" + collection.Payer.Email + "</Data></Cell>";
+                reportLine += "    <Cell ss:Index=\"2\" ss:StyleID=\"s67\"><Data ss:Type=\"String\">" + StringOrNull(collection.DateCreated) + "</Data></Cell>";
+                reportLine += "    <Cell ss:StyleID=\"s67\"><Data ss:Type=\"String\">" + StringOrNull(collection.LastModified) + "</Data></Cell>";
+                reportLine += "    <Cell><Data ss:Type=\"String\">" + StringOrNull(collection.OperationType) + "</Data></Cell>";
+                reportLine += "    <Cell ss:StyleID=\"s79\"><Data ss:Type=\"String\">" + StringOrNull(collection.Payer.Email) + "</Data></Cell>";
+                reportLine += "    <Cell ss:StyleID=\"s75\"><Data ss:Type=\"String\">" + StringOrNull(collection.Payer.Nickname) + "</Data></Cell>";
+                reportLine += "    <Cell ss:StyleID=\"s75\"><Data ss:Type=\"String\">" + StringOrNull(collection.Payer.FirstName) + " " + StringOrNull(collection.Payer.LastName)  + "</Data></Cell>";
+                reportLine += "    <Cell ss:StyleID=\"s75\"><Data ss:Type=\"String\">" + StringOrNull(collection.Reason) + "</Data></Cell>";
+                reportLine += "    <Cell><Data ss:Type=\"Number\">" + StringOrNull(collection.TotalPaidAmount) + "</Data></Cell>";
+                reportLine += "    <Cell><Data ss:Type=\"Number\">" + StringOrNull(collection.ShippingCost) + "</Data></Cell>";
+                reportLine += "    <Cell><Data ss:Type=\"Number\">" + StringOrNull(collection.TransactionAmount) + "</Data></Cell>";
+                reportLine += "    <Cell><Data ss:Type=\"Number\">" + StringOrNull(collection.MercadoPagoFee) + "</Data></Cell>";
+                reportLine += "    <Cell><Data ss:Type=\"String\">" + StringOrNull(collection.Status) + "</Data></Cell>";
+                reportLine += "    <Cell><Data ss:Type=\"String\">" + StringOrNull(collection.StatusDetail) + "</Data></Cell>";
+                reportLine += "    <Cell ss:StyleID=\"s68\"><Data ss:Type=\"Number\">" + StringOrNull(collection.Id) + "</Data></Cell>";
+                reportLine += "    <Cell ss:StyleID=\"Default\"><Data ss:Type=\"String\">" + StringOrNull(collection.ExternalReference) + "</Data></Cell>";
+                reportLine += "    <Cell ss:StyleID=\"s67\"><Data ss:Type=\"String\">" + StringOrNull(collection.MoneyReleaseDate) + "</Data></Cell>";
+                reportLine += "    <Cell><Data ss:Type=\"String\">" + StringOrNull(collection.PaymentType) + "</Data></Cell>";
                 reportLine += "</Row>";
 
                 _file.WriteLine(reportLine);
@@ -48,7 +51,8 @@ namespace ReportGenerator
                 {
                     if (_progressBar != null)
                     {
-                        _progressBar.Value += 1;
+                        _progressBar.Invoke(new IncreaseProgressBarValueCallback(this.IncreaseProgressBarValue), null);
+                        _progressBar.Invoke(new UpdateProgressTextValueCallback(this.UpdateProgressTextValue), new object[] { _progressBar.Value.ToString() + " of " + _progressBar.Maximum.ToString() });
                     }
                 }
                 catch
@@ -63,10 +67,12 @@ namespace ReportGenerator
             {
                 string reportLine = "";
                 reportLine += "<Row ss:AutoFitHeight=\"0\">";
-                reportLine += "    <Cell ss:Index=\"2\" ss:StyleID=\"s65\"><Data ss:Type=\"String\">" + movement.DateCreated.ToString() + "</Data></Cell>";
-                reportLine += "    <Cell><Data ss:Type=\"String\">" + movement.Detail + "</Data></Cell>";
-                reportLine += "    <Cell><Data ss:Type=\"Number\">" + movement.Amount.ToString().Replace(",", ".") + "</Data></Cell>";
-                reportLine += "    <Cell><Data ss:Type=\"Number\">" + movement.BalancedAmount.ToString().Replace(",", ".") + "</Data></Cell>";
+                reportLine += "    <Cell ss:Index=\"2\" ss:StyleID=\"s65\"><Data ss:Type=\"String\">" + StringOrNull(movement.DateCreated) + "</Data></Cell>";
+                reportLine += "    <Cell><Data ss:Type=\"String\">" + StringOrNull(movement.Detail) + "</Data></Cell>";
+                reportLine += "    <Cell ss:StyleID=\"s69\"><Data ss:Type=\"String\">" + StringOrNull(movement.Id) + "</Data></Cell>";
+                reportLine += "    <Cell ss:StyleID=\"s69\"><Data ss:Type=\"String\">" + StringOrNull(movement.ReferenceId) + "</Data></Cell>";
+                reportLine += "    <Cell><Data ss:Type=\"Number\">" + StringOrNull(movement.Amount) + "</Data></Cell>";
+                reportLine += "    <Cell><Data ss:Type=\"Number\">" + StringOrNull(movement.BalancedAmount) + "</Data></Cell>";
                 reportLine += "</Row>";
 
                 _file.WriteLine(reportLine);
@@ -74,7 +80,8 @@ namespace ReportGenerator
                 {
                     if (_progressBar != null)
                     {
-                        _progressBar.Value += 1;
+                        _progressBar.Invoke(new IncreaseProgressBarValueCallback(this.IncreaseProgressBarValue), null);
+                        _progressBar.Invoke(new UpdateProgressTextValueCallback(this.UpdateProgressTextValue), new object[] { _progressBar.Value.ToString() + " of " + _progressBar.Maximum.ToString() });
                     }
                 }
                 catch 
@@ -185,35 +192,44 @@ namespace ReportGenerator
             fileHeader += "  </Style>";
             fileHeader += " </Styles>";
             fileHeader += " <Worksheet ss:Name=\"Report\">";
-            fileHeader += "  <Table ss:ExpandedColumnCount=\"15\" ss:ExpandedRowCount=\"" + (rowCount + 2).ToString() + "\" x:FullColumns=\"1\"";
+            fileHeader += "  <Table ss:ExpandedColumnCount=\"18\" ss:ExpandedRowCount=\"" + (rowCount + 2).ToString() + "\" x:FullColumns=\"1\"";
             fileHeader += "   x:FullRows=\"1\" ss:DefaultColumnWidth=\"60\" ss:DefaultRowHeight=\"15\">";
             fileHeader += "   <Column ss:Index=\"2\" ss:StyleID=\"s62\" ss:AutoFitWidth=\"0\" ss:Width=\"135\"/>";
-            fileHeader += "   <Column ss:StyleID=\"s77\" ss:AutoFitWidth=\"0\" ss:Width=\"135\"/>";
             fileHeader += "   <Column ss:StyleID=\"s62\" ss:AutoFitWidth=\"0\" ss:Width=\"135\"/>";
             fileHeader += "   <Column ss:StyleID=\"s70\" ss:AutoFitWidth=\"0\" ss:Width=\"135\"/>";
-            fileHeader += "   <Column ss:StyleID=\"s70\" ss:AutoFitWidth=\"0\" ss:Width=\"213.75\"/>";
-            fileHeader += "   <Column ss:StyleID=\"s70\" ss:AutoFitWidth=\"0\" ss:Width=\"135\" ss:Span=\"1\"/>";
-            fileHeader += "   <Column ss:Index=\"9\" ss:StyleID=\"s62\" ss:AutoFitWidth=\"0\" ss:Width=\"135\"/>";
             fileHeader += "   <Column ss:StyleID=\"s73\" ss:AutoFitWidth=\"0\" ss:Width=\"213.75\"/>";
-            fileHeader += "   <Column ss:StyleID=\"s63\" ss:AutoFitWidth=\"0\" ss:Width=\"108.75\" ss:Span=\"2\"/>";
-            fileHeader += "   <Column ss:Index=\"14\" ss:StyleID=\"s73\" ss:AutoFitWidth=\"0\" ss:Width=\"213.75\"";
-            fileHeader += "    ss:Span=\"1\"/>";
+            fileHeader += "   <Column ss:StyleID=\"s73\" ss:AutoFitWidth=\"0\" ss:Width=\"213.75\"/>";
+            fileHeader += "   <Column ss:StyleID=\"s73\" ss:AutoFitWidth=\"0\" ss:Width=\"213.75\"/>";
+            fileHeader += "   <Column ss:StyleID=\"s73\" ss:AutoFitWidth=\"0\" ss:Width=\"213.75\"/>";
+            fileHeader += "   <Column ss:StyleID=\"s63\" ss:AutoFitWidth=\"0\" ss:Width=\"108.75\"/>";
+            fileHeader += "   <Column ss:StyleID=\"s63\" ss:AutoFitWidth=\"0\" ss:Width=\"108.75\"/>";
+            fileHeader += "   <Column ss:StyleID=\"s63\" ss:AutoFitWidth=\"0\" ss:Width=\"108.75\"/>";
+            fileHeader += "   <Column ss:StyleID=\"s63\" ss:AutoFitWidth=\"0\" ss:Width=\"108.75\"/>";
+            fileHeader += "   <Column ss:StyleID=\"s70\" ss:AutoFitWidth=\"0\" ss:Width=\"135\"/>";
+            fileHeader += "   <Column ss:StyleID=\"s70\" ss:AutoFitWidth=\"0\" ss:Width=\"213.75\"/>";
+            fileHeader += "   <Column ss:StyleID=\"s77\" ss:AutoFitWidth=\"0\" ss:Width=\"135\"/>";
+            fileHeader += "   <Column ss:StyleID=\"s62\" ss:AutoFitWidth=\"0\" ss:Width=\"135\"/>";
+            fileHeader += "   <Column ss:StyleID=\"s62\" ss:AutoFitWidth=\"0\" ss:Width=\"135\"/>";
+            fileHeader += "   <Column ss:StyleID=\"s70\" ss:AutoFitWidth=\"0\" ss:Width=\"135\"/>";
             fileHeader += "   <Row ss:AutoFitHeight=\"0\"/>";
             fileHeader += "   <Row ss:AutoFitHeight=\"0\" ss:StyleID=\"s64\">";
             fileHeader += "    <Cell ss:Index=\"2\" ss:StyleID=\"s66\"><Data ss:Type=\"String\">Date</Data></Cell>";
-            fileHeader += "    <Cell ss:StyleID=\"s66\"><Data ss:Type=\"String\">Payment Id</Data></Cell>";
-            fileHeader += "    <Cell ss:StyleID=\"s66\"><Data ss:Type=\"String\">External Reference</Data></Cell>";
+            fileHeader += "    <Cell ss:StyleID=\"s66\"><Data ss:Type=\"String\">Last Modified Date</Data></Cell>";
+            fileHeader += "    <Cell ss:StyleID=\"s66\"><Data ss:Type=\"String\">Operation Type</Data></Cell>";
+            fileHeader += "    <Cell ss:StyleID=\"s66\"><Data ss:Type=\"String\">Buyer Email</Data></Cell>";
+            fileHeader += "    <Cell ss:StyleID=\"s66\"><Data ss:Type=\"String\">Buyer Nickname</Data></Cell>";
+            fileHeader += "    <Cell ss:StyleID=\"s66\"><Data ss:Type=\"String\">Buyer Name</Data></Cell>";
+            fileHeader += "    <Cell ss:StyleID=\"s66\"><Data ss:Type=\"String\">Description</Data></Cell>";
+            fileHeader += "    <Cell ss:StyleID=\"s66\"><Data ss:Type=\"String\">Total Paid Amount</Data></Cell>";
+            fileHeader += "    <Cell ss:StyleID=\"s66\"><Data ss:Type=\"String\">Shipping Cost</Data></Cell>";
+            fileHeader += "    <Cell ss:StyleID=\"s66\"><Data ss:Type=\"String\">Transaction Amount</Data></Cell>";
+            fileHeader += "    <Cell ss:StyleID=\"s66\"><Data ss:Type=\"String\">MercadoPago Fee</Data></Cell>";
             fileHeader += "    <Cell ss:StyleID=\"s66\"><Data ss:Type=\"String\">Status</Data></Cell>";
             fileHeader += "    <Cell ss:StyleID=\"s66\"><Data ss:Type=\"String\">Status Detail</Data></Cell>";
-            fileHeader += "    <Cell ss:StyleID=\"s66\"><Data ss:Type=\"String\">Operation Type</Data></Cell>";
+            fileHeader += "    <Cell ss:StyleID=\"s66\"><Data ss:Type=\"String\">Payment Id</Data></Cell>";
+            fileHeader += "    <Cell ss:StyleID=\"s66\"><Data ss:Type=\"String\">External Reference</Data></Cell>";
+            fileHeader += "    <Cell ss:StyleID=\"s66\"><Data ss:Type=\"String\">Money Release Date</Data></Cell>";
             fileHeader += "    <Cell ss:StyleID=\"s66\"><Data ss:Type=\"String\">Payment Type</Data></Cell>";
-            fileHeader += "    <Cell ss:StyleID=\"s66\"><Data ss:Type=\"String\">Last Modified Date</Data></Cell>";
-            fileHeader += "    <Cell ss:StyleID=\"s66\"><Data ss:Type=\"String\">Reason</Data></Cell>";
-            fileHeader += "    <Cell ss:StyleID=\"s66\"><Data ss:Type=\"String\">Transaction Amount</Data></Cell>";
-            fileHeader += "    <Cell ss:StyleID=\"s66\"><Data ss:Type=\"String\">Shipping Cost</Data></Cell>";
-            fileHeader += "    <Cell ss:StyleID=\"s66\"><Data ss:Type=\"String\">Total Paid Amount</Data></Cell>";
-            fileHeader += "    <Cell ss:StyleID=\"s66\"><Data ss:Type=\"String\">Buyer Nickname</Data></Cell>";
-            fileHeader += "    <Cell ss:StyleID=\"s66\"><Data ss:Type=\"String\">Buyer Email</Data></Cell>";
             fileHeader += "   </Row>";
 
             return fileHeader;
@@ -280,16 +296,20 @@ namespace ReportGenerator
             fileHeader += "  </Style>";
             fileHeader += " </Styles>";
             fileHeader += " <Worksheet ss:Name=\"Report\">";
-            fileHeader += "  <Table ss:ExpandedColumnCount=\"5\" ss:ExpandedRowCount=\"" + (rowCount + 2).ToString() + "\" x:FullColumns=\"1\"";
+            fileHeader += "  <Table ss:ExpandedColumnCount=\"7\" ss:ExpandedRowCount=\"" + (rowCount + 2).ToString() + "\" x:FullColumns=\"1\"";
             fileHeader += "   x:FullRows=\"1\" ss:DefaultColumnWidth=\"60\" ss:DefaultRowHeight=\"15\">";
             fileHeader += "   <Column ss:Index=\"2\" ss:StyleID=\"s66\" ss:AutoFitWidth=\"0\" ss:Width=\"135\"/>";
             fileHeader += "   <Column ss:AutoFitWidth=\"0\" ss:Width=\"266.25\"/>";
+            fileHeader += "   <Column ss:StyleID=\"s69\" ss:AutoFitWidth=\"0\" ss:Width=\"135\"/>";
+            fileHeader += "   <Column ss:StyleID=\"s69\" ss:AutoFitWidth=\"0\" ss:Width=\"135\"/>";
             fileHeader += "   <Column ss:StyleID=\"s69\" ss:AutoFitWidth=\"0\" ss:Width=\"108.75\"/>";
             fileHeader += "   <Column ss:StyleID=\"s69\" ss:AutoFitWidth=\"0\" ss:Width=\"108.75\"/>";
             fileHeader += "   <Row ss:AutoFitHeight=\"0\"/>";
             fileHeader += "   <Row ss:AutoFitHeight=\"0\" ss:StyleID=\"s62\">";
             fileHeader += "    <Cell ss:Index=\"2\" ss:StyleID=\"s63\"><Data ss:Type=\"String\">Date</Data></Cell>";
             fileHeader += "    <Cell ss:StyleID=\"s63\"><Data ss:Type=\"String\">Detail</Data></Cell>";
+            fileHeader += "    <Cell ss:StyleID=\"s63\"><Data ss:Type=\"String\">Movement Id</Data></Cell>";
+            fileHeader += "    <Cell ss:StyleID=\"s63\"><Data ss:Type=\"String\">Reference Id</Data></Cell>";
             fileHeader += "    <Cell ss:StyleID=\"s63\"><Data ss:Type=\"String\">Amount</Data></Cell>";
             fileHeader += "    <Cell ss:StyleID=\"s63\"><Data ss:Type=\"String\">Balanced Amount</Data></Cell>";
             fileHeader += "   </Row>";
@@ -328,6 +348,54 @@ namespace ReportGenerator
             reportFooter += "</Workbook>";
 
             return reportFooter;
+        }
+
+        private string StringOrNull(String text)
+        {
+            if (text != null)
+            {
+                return text;
+            }
+            else
+            {
+                return String.Empty;
+            }
+        }
+
+        private string StringOrNull(DateTime? date)
+        {
+            if (date != null)
+            {
+                return date.ToString();
+            }
+            else
+            {
+                return String.Empty;
+            }
+        }
+
+        private string StringOrNull(Int32? number)
+        {
+            if (number != null)
+            {
+                return number.ToString().Replace(",", ".");
+            }
+            else
+            {
+                return String.Empty;
+            }
+        }
+
+        private string StringOrNull(float? number)
+        {
+            if (number != null)
+            {
+                return number.ToString().Replace(",", ".");
+            }
+            else
+            {
+                return String.Empty;
+            }
         }
     }
 }

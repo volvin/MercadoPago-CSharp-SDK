@@ -10,7 +10,10 @@ namespace ReportGenerator
 {
     public class BackendHelper
     {
-        public static SearchPage<Collection> GetCollectionsPage(Int32 offset, Int32 limit, OAuthResponse authorization, DateTime dateFrom, DateTime dateTo)
+        private const int MAX_RETRIES = 5;
+
+        // Recursively tries to get a collections page from the MP API
+        public static SearchPage<Collection> GetCollectionsPage(Int32 offset, Int32 limit, OAuthResponse authorization, DateTime dateFrom, DateTime dateTo, int retryNumber = 0)
         {
             PaymentsHelper ph = new PaymentsHelper();
 
@@ -37,15 +40,25 @@ namespace ReportGenerator
             args.Add(new KeyValuePair<string, string>("begin_date", HttpUtility.UrlEncode(dateFrom.GetDateTimeFormats('s')[0].ToString() + ".000Z")));
             args.Add(new KeyValuePair<string, string>("end_date", HttpUtility.UrlEncode(dateTo.GetDateTimeFormats('s')[0].ToString() + ".000Z")));
 
-            // Call API
             SearchPage<Collection> searchPage = null;
             try
             {
+                // Search the API
                 searchPage = ph.SearchCollections(args);
             }
             catch (RESTAPIException raex)
             {
-                throw raex;
+                // Retries the same call until max is reached
+                if (retryNumber <= MAX_RETRIES)
+                {
+                    LogHelper.WriteLine("SearchCollections breaks. Retry num: " + retryNumber.ToString()); 
+                    BackendHelper.GetCollectionsPage(offset, limit, authorization, dateFrom, dateTo, retryNumber + 1);
+                }
+                else
+                {
+                    // then breaks
+                    throw raex;
+                }
             }
 
             return searchPage;
