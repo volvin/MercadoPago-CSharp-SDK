@@ -1,4 +1,23 @@
-﻿using System;
+﻿/*
+ * Copyright 2012 MercadoLibre, Inc.
+ *
+ * Changed to retrieve a well-formed json string running .ToString() method.
+ * Allows to serialize scalar data at CreateFromString method.
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may
+ * not use this file except in compliance with the License. You may obtain
+ * a copy of the License at
+ * 
+ *  http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations
+ * under the License.
+ */
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,18 +27,20 @@ using System.Windows.Forms;
 
 namespace ReportGenerator
 {
+    /// <summary>
+    /// A representation of the Backend Helper resource. 
+    /// </summary>
     public class BackendHelper
     {
-        private const int MAX_RETRIES = 5;
-
-        // Recursively tries to get a collections page from the MP API
+        /// <summary>
+        /// Recursively tries to get a collections page from the MP API.
+        /// </summary>
         public static SearchPage<Collection> GetCollectionsPage(Int32 offset, Int32 limit, OAuthResponse authorization, DateTime dateFrom, DateTime dateTo, int retryNumber = 0)
         {
             PaymentsHelper ph = new PaymentsHelper();
 
-            // Set access token and hook API call event
-            ph.AccessToken = authorization.AccessToken;
-            //ah.APICall += new APICallEventHandler(OnAPICall);
+            // Set access token
+            ph.AccessToken = GetAccessToken(authorization);
 
             // Prepare API call arguments
             List<KeyValuePair<string, string>> args = new List<KeyValuePair<string, string>>();
@@ -64,13 +85,15 @@ namespace ReportGenerator
             return searchPage;
         }
 
-        public static SearchPage<Movement> GetMovementsPage(Int32 offset, Int32 limit, OAuthResponse authorization, DateTime dateFrom, DateTime dateTo)
+        /// <summary>
+        /// Recursively tries to get a movements page from the MP API.
+        /// </summary>
+        public static SearchPage<Movement> GetMovementsPage(Int32 offset, Int32 limit, OAuthResponse authorization, DateTime dateFrom, DateTime dateTo, int retryNumber = 0)
         {
             AccountsHelper ah = new AccountsHelper();
 
-            // Set access token and hook API call event
-            ah.AccessToken = authorization.AccessToken;
-            //ah.APICall += new APICallEventHandler(OnAPICall);
+            // Set access token
+            ah.AccessToken = GetAccessToken(authorization);
 
             // Prepare API call arguments
             List<KeyValuePair<string, string>> args = new List<KeyValuePair<string, string>>();
@@ -99,10 +122,50 @@ namespace ReportGenerator
             }
             catch (RESTAPIException raex)
             {
-                throw raex;
+                // Retries the same call until max is reached
+                if (retryNumber <= MAX_RETRIES)
+                {
+                    LogHelper.WriteLine("SearchMovements breaks. Retry num: " + retryNumber.ToString());
+                    BackendHelper.GetMovementsPage(offset, limit, authorization, dateFrom, dateTo, retryNumber + 1);
+                }
+                else
+                {
+                    // then breaks
+                    throw raex;
+                }
             }
 
-            return searchPage;
+            if (searchPage != null)
+            {
+                return searchPage;
+            }
+            else
+            {
+                LogHelper.WriteLine("null");
+                return null;
+            }
         }
+
+        #region "Private Members"
+
+        private const int MAX_RETRIES = 5;
+
+        /// <summary>
+        /// Get OAuth response access token validating expiration date.
+        /// </summary>
+        private static string GetAccessToken(OAuthResponse authorization)
+        {
+            // Validate access token expiration date
+            if (DateTime.Now.CompareTo(authorization.ExpirationDate) < 0)
+            {
+                return authorization.AccessToken;
+            }
+            else
+            {
+                throw new RESTAPIException(400, "", "Session expired", "Access token timed out");
+            }
+        }
+
+        #endregion
     }
 }

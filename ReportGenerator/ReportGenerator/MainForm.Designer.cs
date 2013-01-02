@@ -38,13 +38,13 @@
             this.movementsRadioButton = new System.Windows.Forms.RadioButton();
             this.collectionsRadioButton = new System.Windows.Forms.RadioButton();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.fileNameTextBox = new System.Windows.Forms.TextBox();
             this.csvRadioButton = new System.Windows.Forms.RadioButton();
             this.excelRadioButton = new System.Windows.Forms.RadioButton();
             this.label5 = new System.Windows.Forms.Label();
             this.openGetFolderDialogButton = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.fileNameTextBox = new System.Windows.Forms.TextBox();
             this.folderTextBox = new System.Windows.Forms.TextBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.label2 = new System.Windows.Forms.Label();
@@ -151,13 +151,13 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.fileNameTextBox);
             this.groupBox2.Controls.Add(this.csvRadioButton);
             this.groupBox2.Controls.Add(this.excelRadioButton);
             this.groupBox2.Controls.Add(this.label5);
             this.groupBox2.Controls.Add(this.openGetFolderDialogButton);
             this.groupBox2.Controls.Add(this.label4);
             this.groupBox2.Controls.Add(this.label3);
-            this.groupBox2.Controls.Add(this.fileNameTextBox);
             this.groupBox2.Controls.Add(this.folderTextBox);
             this.groupBox2.Location = new System.Drawing.Point(300, 184);
             this.groupBox2.Name = "groupBox2";
@@ -165,6 +165,16 @@
             this.groupBox2.TabIndex = 42;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Target File";
+            // 
+            // fileNameTextBox
+            // 
+            this.fileNameTextBox.Location = new System.Drawing.Point(98, 66);
+            this.fileNameTextBox.MaxLength = 40;
+            this.fileNameTextBox.Name = "fileNameTextBox";
+            this.fileNameTextBox.Size = new System.Drawing.Size(251, 20);
+            this.fileNameTextBox.TabIndex = 48;
+            this.fileNameTextBox.Text = "my_report";
+            this.fileNameTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.fileNameTextBox_KeyPress);
             // 
             // csvRadioButton
             // 
@@ -224,14 +234,6 @@
             this.label3.Size = new System.Drawing.Size(36, 13);
             this.label3.TabIndex = 42;
             this.label3.Text = "Folder";
-            // 
-            // fileNameTextBox
-            // 
-            this.fileNameTextBox.Location = new System.Drawing.Point(98, 66);
-            this.fileNameTextBox.Name = "fileNameTextBox";
-            this.fileNameTextBox.Size = new System.Drawing.Size(251, 20);
-            this.fileNameTextBox.TabIndex = 41;
-            this.fileNameTextBox.Text = "my_report";
             // 
             // folderTextBox
             // 
@@ -374,7 +376,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.DateTimePicker reportToPicker;
         private System.Windows.Forms.DateTimePicker reportFromPicker;
-        private System.Windows.Forms.TextBox fileNameTextBox;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button openGetFolderDialogButton;
@@ -383,6 +384,7 @@
         private System.Windows.Forms.RadioButton excelRadioButton;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Button abortButton;
+        private System.Windows.Forms.TextBox fileNameTextBox;
     }
 }
 

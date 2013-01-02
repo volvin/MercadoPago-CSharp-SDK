@@ -285,46 +285,40 @@ namespace MercadoPagoSDK
                     apiCallEvent.Url = url.ToString();
                     OnAPICall(apiCallEvent);
 
-                    // Understand REST response
-                    if (SuccessfulCall(response.StatusCode))
-                    {
-                        // Ok
-                        return responseBody;
-                    }
-                    else
-                    {
-                        // Problem
-                        try
-                        {
-                            // Try throwing a well-formed api error
-                            JSONObject errorBody = JSONObject.CreateFromString(responseBody);
-                            int status = Convert.ToInt16(errorBody.Dictionary["status"].String);
-                            string error = errorBody.Dictionary["error"].String;
-                            string message = errorBody.Dictionary["message"].String;
-                            // optional: cause
-                            string cause = "";
-                            try
-                            {
-                                cause = errorBody.Dictionary["cause"].Dictionary["message"].String;
-                            }
-                            catch
-                            { }
-                            throw new RESTAPIException(status, error, message, cause);
-                        }
-                        catch (RESTAPIException restEx)
-                        {
-                            throw restEx;  // this is a well-formed error message
-                        }
-                        catch
-                        {
-                            throw new RESTAPIException(Convert.ToInt16(response.StatusCode.ToString()), "", responseBody);  // this is not a well-formed message
-                        }
-                    }
+                    // Return API response body
+                    return responseBody;
                 }
             }
             catch (WebException e)
             {
-                throw new RESTAPIException(999, "Server Error", e.Message);
+                JSONObject response = null;
+                try 
+                {
+                    // Try throwing a well-formed api error
+                    Stream stream = e.Response.GetResponseStream();
+                    StreamReader reader = new StreamReader(stream);
+                    response = JSONObject.CreateFromString(reader.ReadToEnd().Trim());
+                    int status = Convert.ToInt16(response.GetJSONStringAttribute("status"));
+                    string error = response.GetJSONStringAttribute("error");
+                    string message = response.GetJSONStringAttribute("message");
+                    // optional: cause
+                    string cause = "";
+                    try
+                    {
+                        cause = response.Dictionary["cause"].Dictionary["message"].String;
+                    }
+                    catch
+                    { }
+                    throw new RESTAPIException(status, error, message, cause);
+                }
+                catch (RESTAPIException restEx)
+                {
+                    throw restEx;  // this is a well-formed error message
+                }
+                catch
+                {
+                    throw new RESTAPIException(999, e.Status.ToString(), e.Message);  // this is not a well-formed message
+                }
             }
         }
 
@@ -353,22 +347,6 @@ namespace MercadoPagoSDK
                 // just url
             }
             return url;
-        }
-
-        /// <summary>
-        /// Defines wether or not an API call was successful.
-        /// </summary>
-        private bool SuccessfulCall(HttpStatusCode status)
-        { 
-            switch (status)
-            {
-                case HttpStatusCode.Accepted: case HttpStatusCode.Continue: case HttpStatusCode.Created: case HttpStatusCode.NoContent: 
-                case HttpStatusCode.NonAuthoritativeInformation: case HttpStatusCode.OK: case HttpStatusCode.PartialContent:
-                case HttpStatusCode.ResetContent: case HttpStatusCode.SwitchingProtocols:
-                    return true;
-                default:
-                    return false;
-            }
         }
 
         #endregion

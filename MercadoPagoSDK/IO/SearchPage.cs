@@ -27,10 +27,10 @@ namespace MercadoPagoSDK
     public class SearchPage<T>
     {
         /// <summary>
-        /// Create a new credential instance using a valid json.
+        /// Create a new search page instance using a valid json.
         /// </summary>
         /// <param name="json">The json object used to
-        /// fill the credential data</param>
+        /// fill the search page data</param>
         public static SearchPage<T> CreateInstance(JSONObject json)
         {
             // todo: strong type validation

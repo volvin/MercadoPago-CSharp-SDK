@@ -1,4 +1,23 @@
-﻿using System;
+﻿/*
+ * Copyright 2012 MercadoLibre, Inc.
+ *
+ * Changed to retrieve a well-formed json string running .ToString() method.
+ * Allows to serialize scalar data at CreateFromString method.
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may
+ * not use this file except in compliance with the License. You may obtain
+ * a copy of the License at
+ * 
+ *  http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations
+ * under the License.
+ */
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,25 +26,37 @@ using MercadoPagoSDK;
 
 namespace ReportGenerator
 {
+    /// <summary>
+    /// A representation of the Excel Writter resource. 
+    /// </summary>
     public class ExcelWritter : ReportWritter
     {
-        private const int API_QUERY_PAGE_SIZE = 50;
-        private const int MAX_REPORT_SIZE = 60000;
-
+        /// <summary>
+        /// Create a new Excel Writter instance.
+        /// </summary>
         public ExcelWritter()
         { }
 
+        /// <summary>
+        /// Create a new Excel Writter instance.
+        /// </summary>
+        /// <param name="file">The destination file
+        /// </param>
         public ExcelWritter(System.IO.StreamWriter file)
         {
             _file = file;
         }
 
+        /// <summary>
+        /// Writes a collections set to file.
+        /// </summary>
         public override void WriteCollections(List<Collection> collections)
         {
             foreach (Collection collection in collections)
             {
                 string reportLine = "";
 
+                // Prepare line
                 reportLine += "<Row ss:AutoFitHeight=\"0\">";
                 reportLine += "    <Cell ss:Index=\"2\" ss:StyleID=\"s67\"><Data ss:Type=\"String\">" + StringOrNull(collection.DateCreated) + "</Data></Cell>";
                 reportLine += "    <Cell ss:StyleID=\"s67\"><Data ss:Type=\"String\">" + StringOrNull(collection.LastModified) + "</Data></Cell>";
@@ -46,26 +77,51 @@ namespace ReportGenerator
                 reportLine += "    <Cell><Data ss:Type=\"String\">" + StringOrNull(collection.PaymentType) + "</Data></Cell>";
                 reportLine += "</Row>";
 
+                // Write report line
                 _file.WriteLine(reportLine);
-                try
+
+                // Update progress bar & text 
+                if (_progressBar != null)
                 {
-                    if (_progressBar != null)
-                    {
-                        _progressBar.Invoke(new IncreaseProgressBarValueCallback(this.IncreaseProgressBarValue), null);
-                        _progressBar.Invoke(new UpdateProgressTextValueCallback(this.UpdateProgressTextValue), new object[] { _progressBar.Value.ToString() + " of " + _progressBar.Maximum.ToString() });
-                    }
-                }
-                catch
-                {
+                    _progressBar.Invoke(new IncreaseProgressBarValueCallback(this.IncreaseProgressBarValue), null);
+                    _progressBar.Invoke(new UpdateProgressTextValueCallback(this.UpdateProgressTextValue), new object[] { _progressBar.Value.ToString() + " of " + _progressBar.Maximum.ToString() });
                 }
             }
         }
 
+        /// <summary>
+        /// Writes the file footer.
+        /// </summary>
+        public override void WriteFooter()
+        {
+            _file.WriteLine(GetReportFooter());
+        }
+
+        /// <summary>
+        /// Writes the file header.
+        /// </summary>
+        public override void WriteHeader(ReportTypes reportType, int numberOfRows = 0)
+        {
+            if (reportType == ReportTypes.CollectionsReport)
+            {
+                _file.WriteLine(GetCollectionReportHeader(numberOfRows));
+            }
+            else
+            {
+                _file.WriteLine(GetMovementReportHeader(numberOfRows));
+            }
+        }
+
+        /// <summary>
+        /// Writes a movements set to file.
+        /// </summary>
         public override void WriteMovements(List<Movement> movements)
         {
             foreach (Movement movement in movements)
             {
                 string reportLine = "";
+
+                // Prepare line
                 reportLine += "<Row ss:AutoFitHeight=\"0\">";
                 reportLine += "    <Cell ss:Index=\"2\" ss:StyleID=\"s65\"><Data ss:Type=\"String\">" + StringOrNull(movement.DateCreated) + "</Data></Cell>";
                 reportLine += "    <Cell><Data ss:Type=\"String\">" + StringOrNull(movement.Detail) + "</Data></Cell>";
@@ -75,38 +131,61 @@ namespace ReportGenerator
                 reportLine += "    <Cell><Data ss:Type=\"Number\">" + StringOrNull(movement.BalancedAmount) + "</Data></Cell>";
                 reportLine += "</Row>";
 
+                // Write report line
                 _file.WriteLine(reportLine);
-                try
+
+                // Update progress bar & text 
+                if (_progressBar != null)
                 {
-                    if (_progressBar != null)
-                    {
-                        _progressBar.Invoke(new IncreaseProgressBarValueCallback(this.IncreaseProgressBarValue), null);
-                        _progressBar.Invoke(new UpdateProgressTextValueCallback(this.UpdateProgressTextValue), new object[] { _progressBar.Value.ToString() + " of " + _progressBar.Maximum.ToString() });
-                    }
-                }
-                catch 
-                { 
+                    _progressBar.Invoke(new IncreaseProgressBarValueCallback(this.IncreaseProgressBarValue), null);
+                    _progressBar.Invoke(new UpdateProgressTextValueCallback(this.UpdateProgressTextValue), new object[] { _progressBar.Value.ToString() + " of " + _progressBar.Maximum.ToString() });
                 }
             }        
         }
 
-        public override void WriteFooter()
+        #region "Private Members"
+
+        private const int MAX_REPORT_SIZE = 60000;
+
+        /// <summary>
+        /// Sets a report footer.
+        /// </summary>
+        private string GetReportFooter()
         {
-            _file.WriteLine(GetReportFooter());
+            string reportFooter = "";
+
+            reportFooter += "  </Table>";
+            reportFooter += "  <WorksheetOptions xmlns=\"urn:schemas-microsoft-com:office:excel\">";
+            reportFooter += "   <PageSetup>";
+            reportFooter += "    <Header x:Margin=\"0.3\"/>";
+            reportFooter += "    <Footer x:Margin=\"0.3\"/>";
+            reportFooter += "    <PageMargins x:Bottom=\"0.75\" x:Left=\"0.7\" x:Right=\"0.7\" x:Top=\"0.75\"/>";
+            reportFooter += "   </PageSetup>";
+            reportFooter += "   <Unsynced/>";
+            reportFooter += "   <Print>";
+            reportFooter += "    <ValidPrinterInfo/>";
+            reportFooter += "    <HorizontalResolution>600</HorizontalResolution>";
+            reportFooter += "    <VerticalResolution>600</VerticalResolution>";
+            reportFooter += "   </Print>";
+            reportFooter += "   <Selected/>";
+            reportFooter += "   <Panes>";
+            reportFooter += "    <Pane>";
+            reportFooter += "     <Number>3</Number>";
+            reportFooter += "     <ActiveRow>3</ActiveRow>";
+            reportFooter += "    </Pane>";
+            reportFooter += "   </Panes>";
+            reportFooter += "   <ProtectObjects>False</ProtectObjects>";
+            reportFooter += "   <ProtectScenarios>False</ProtectScenarios>";
+            reportFooter += "  </WorksheetOptions>";
+            reportFooter += " </Worksheet>";
+            reportFooter += "</Workbook>";
+
+            return reportFooter;
         }
 
-        public override void WriteHeader(ReportTypes reportType, int numberOfRows = 0)
-        {
-            if (reportType == ReportTypes.CollectionsReport)
-            {
-                _file.WriteLine(GetCollectionReportHeader(numberOfRows));
-            }
-            else
-            {
-                _file.WriteLine(GetMovementReportHeader(numberOfRows));            
-            }
-        }
-
+        /// <summary>
+        /// Sets a collections report header.
+        /// </summary>
         private string GetCollectionReportHeader(int rowCount)
         {
             string fileHeader = "";
@@ -235,6 +314,9 @@ namespace ReportGenerator
             return fileHeader;
         }
 
+        /// <summary>
+        /// Sets a movements report header.
+        /// </summary>
         private string GetMovementReportHeader(int rowCount)
         {
             string fileHeader = "";
@@ -317,39 +399,9 @@ namespace ReportGenerator
             return fileHeader;
         }
 
-        private string GetReportFooter()
-        {
-            string reportFooter = "";
-
-            reportFooter += "  </Table>";
-            reportFooter += "  <WorksheetOptions xmlns=\"urn:schemas-microsoft-com:office:excel\">";
-            reportFooter += "   <PageSetup>";
-            reportFooter += "    <Header x:Margin=\"0.3\"/>";
-            reportFooter += "    <Footer x:Margin=\"0.3\"/>";
-            reportFooter += "    <PageMargins x:Bottom=\"0.75\" x:Left=\"0.7\" x:Right=\"0.7\" x:Top=\"0.75\"/>";
-            reportFooter += "   </PageSetup>";
-            reportFooter += "   <Unsynced/>";
-            reportFooter += "   <Print>";
-            reportFooter += "    <ValidPrinterInfo/>";
-            reportFooter += "    <HorizontalResolution>600</HorizontalResolution>";
-            reportFooter += "    <VerticalResolution>600</VerticalResolution>";
-            reportFooter += "   </Print>";
-            reportFooter += "   <Selected/>";
-            reportFooter += "   <Panes>";
-            reportFooter += "    <Pane>";
-            reportFooter += "     <Number>3</Number>";
-            reportFooter += "     <ActiveRow>3</ActiveRow>";
-            reportFooter += "    </Pane>";
-            reportFooter += "   </Panes>";
-            reportFooter += "   <ProtectObjects>False</ProtectObjects>";
-            reportFooter += "   <ProtectScenarios>False</ProtectScenarios>";
-            reportFooter += "  </WorksheetOptions>";
-            reportFooter += " </Worksheet>";
-            reportFooter += "</Workbook>";
-
-            return reportFooter;
-        }
-
+        /// <summary>
+        /// Encode Excel string.
+        /// </summary>
         private string StringOrNull(String text)
         {
             if (text != null)
@@ -397,5 +449,7 @@ namespace ReportGenerator
                 return String.Empty;
             }
         }
+
+        #endregion
     }
 }

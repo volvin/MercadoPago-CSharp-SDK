@@ -1,4 +1,23 @@
-﻿using System;
+﻿/*
+ * Copyright 2012 MercadoLibre, Inc.
+ *
+ * Changed to retrieve a well-formed json string running .ToString() method.
+ * Allows to serialize scalar data at CreateFromString method.
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may
+ * not use this file except in compliance with the License. You may obtain
+ * a copy of the License at
+ * 
+ *  http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations
+ * under the License.
+ */
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,22 +26,37 @@ using System.Windows.Forms;
 
 namespace ReportGenerator
 {
+    /// <summary>
+    /// A representation of the CSV Writter resource. 
+    /// </summary>
     public class CSVWritter : ReportWritter
     {
+        /// <summary>
+        /// Create a new CSV Writter instance.
+        /// </summary>
         public CSVWritter()
         { }
 
+        /// <summary>
+        /// Create a new CSV Writter instance.
+        /// </summary>
+        /// <param name="file">The destination file
+        /// </param>
         public CSVWritter(System.IO.StreamWriter file)
         {
             _file = file;
         }
 
+        /// <summary>
+        /// Writes a collections set to file.
+        /// </summary>
         public override void WriteCollections(List<Collection> collections)
         {
             foreach (Collection collection in collections)
             {
                 string reportLine = "";
 
+                // Prepare line
                 reportLine += EncodeString(collection.DateCreated) + ",";
                 reportLine += EncodeString(collection.LastModified) + ",";
                 reportLine += EncodeString(collection.OperationType) + ",";
@@ -41,54 +75,29 @@ namespace ReportGenerator
                 reportLine += EncodeString(collection.MoneyReleaseDate) + ",";
                 reportLine += EncodeString(collection.PaymentType);
 
+                // Write report line
                 _file.WriteLine(reportLine);
-                try
+
+                // Update progress bar & text 
+                if (_progressBar != null)
                 {
-                    if (_progressBar != null)
-                    {
-                        _progressBar.Invoke(new IncreaseProgressBarValueCallback(this.IncreaseProgressBarValue), null);
-                        _progressBar.Invoke(new UpdateProgressTextValueCallback(this.UpdateProgressTextValue), new object[] { _progressBar.Value.ToString() + " of " + _progressBar.Maximum.ToString() });
-                    }
-                }
-                catch
-                {
+                    _progressBar.Invoke(new IncreaseProgressBarValueCallback(this.IncreaseProgressBarValue), null);
+                    _progressBar.Invoke(new UpdateProgressTextValueCallback(this.UpdateProgressTextValue), new object[] { _progressBar.Value.ToString() + " of " + _progressBar.Maximum.ToString() });
                 }
             }
         }
 
-        public override void WriteMovements(List<Movement> movements)
-        {
-            foreach (Movement movement in movements)
-            {
-                string reportLine = "";
-
-                reportLine += EncodeString(movement.DateCreated) + ",";
-                reportLine += EncodeString(movement.Detail) + ",";
-                reportLine += EncodeString(movement.Id) + ",";
-                reportLine += EncodeString(movement.ReferenceId) + ",";
-                reportLine += EncodeString(movement.Amount) + ",";
-                reportLine += EncodeString(movement.BalancedAmount);
-
-                _file.WriteLine(reportLine);
-                try
-                {
-                    if (_progressBar != null)
-                    {
-                        _progressBar.Invoke(new IncreaseProgressBarValueCallback(this.IncreaseProgressBarValue), null);
-                        _progressBar.Invoke(new UpdateProgressTextValueCallback(this.UpdateProgressTextValue), new object[] { _progressBar.Value.ToString() + " of " + _progressBar.Maximum.ToString() });
-                    }
-                }
-                catch
-                {
-                }
-            }
-        }
-
+        /// <summary>
+        /// Writes the file footer.
+        /// </summary>
         public override void WriteFooter()
-        { 
+        {
             // Do nothing
         }
 
+        /// <summary>
+        /// Writes the file header.
+        /// </summary>
         public override void WriteHeader(ReportTypes reportType, int numberOfRows = 0)
         {
             if (reportType == ReportTypes.CollectionsReport)
@@ -101,43 +110,40 @@ namespace ReportGenerator
             }
         }
 
-        private string GetCollectionReportHeader()
+        /// <summary>
+        /// Writes a movements set to file.
+        /// </summary>
+        public override void WriteMovements(List<Movement> movements)
         {
-            string fileHeader = "";
-            fileHeader += "Date,";
-            fileHeader += "Last Modified Date,";
-            fileHeader += "Operation Type,";
-            fileHeader += "Buyer Email,";
-            fileHeader += "Buyer Nickname,";
-            fileHeader += "Buyer Name,";
-            fileHeader += "Description,";
-            fileHeader += "Total Paid Amount,";
-            fileHeader += "Shipping Cost,";
-            fileHeader += "Transaction Amount,";
-            fileHeader += "MercadoPago Fee,";
-            fileHeader += "Status,";
-            fileHeader += "Status Detail,";
-            fileHeader += "Payment Id,";
-            fileHeader += "External Reference,";
-            fileHeader += "Money Release Date,";
-            fileHeader += "Payment Type";
+            foreach (Movement movement in movements)
+            {
+                string reportLine = "";
 
-            return fileHeader;
+                // Prepare line
+                reportLine += EncodeString(movement.DateCreated) + ",";
+                reportLine += EncodeString(movement.Detail) + ",";
+                reportLine += EncodeString(movement.Id) + ",";
+                reportLine += EncodeString(movement.ReferenceId) + ",";
+                reportLine += EncodeString(movement.Amount) + ",";
+                reportLine += EncodeString(movement.BalancedAmount);
+
+                // Write report line
+                _file.WriteLine(reportLine);
+
+                // Update progress bar & text 
+                if (_progressBar != null)
+                {
+                    _progressBar.Invoke(new IncreaseProgressBarValueCallback(this.IncreaseProgressBarValue), null);
+                    _progressBar.Invoke(new UpdateProgressTextValueCallback(this.UpdateProgressTextValue), new object[] { _progressBar.Value.ToString() + " of " + _progressBar.Maximum.ToString() });
+                }
+            }
         }
 
-        private string GetMovementReportHeader()
-        {
-            string fileHeader = "";
-            fileHeader += "Date,";
-            fileHeader += "Detail,";
-            fileHeader += "Movement Id,";
-            fileHeader += "Reference Id,";
-            fileHeader += "Amount,";
-            fileHeader += "Balanced Amount";
+        #region "Private Members"
 
-            return fileHeader;
-        }
-
+        /// <summary>
+        /// Encodes a CSV string.
+        /// </summary>
         private string EncodeString(String text)
         {
             if (text != null)
@@ -185,5 +191,50 @@ namespace ReportGenerator
                 return String.Empty;
             }
         }
+
+        /// <summary>
+        /// Sets a collections report header.
+        /// </summary>
+        private string GetCollectionReportHeader()
+        {
+            string fileHeader = "";
+            fileHeader += "Date,";
+            fileHeader += "Last Modified Date,";
+            fileHeader += "Operation Type,";
+            fileHeader += "Buyer Email,";
+            fileHeader += "Buyer Nickname,";
+            fileHeader += "Buyer Name,";
+            fileHeader += "Description,";
+            fileHeader += "Total Paid Amount,";
+            fileHeader += "Shipping Cost,";
+            fileHeader += "Transaction Amount,";
+            fileHeader += "MercadoPago Fee,";
+            fileHeader += "Status,";
+            fileHeader += "Status Detail,";
+            fileHeader += "Payment Id,";
+            fileHeader += "External Reference,";
+            fileHeader += "Money Release Date,";
+            fileHeader += "Payment Type";
+
+            return fileHeader;
+        }
+
+        /// <summary>
+        /// Sets a movements report header.
+        /// </summary>
+        private string GetMovementReportHeader()
+        {
+            string fileHeader = "";
+            fileHeader += "Date,";
+            fileHeader += "Detail,";
+            fileHeader += "Movement Id,";
+            fileHeader += "Reference Id,";
+            fileHeader += "Amount,";
+            fileHeader += "Balanced Amount";
+
+            return fileHeader;
+        }
+
+        #endregion
     }
 }
