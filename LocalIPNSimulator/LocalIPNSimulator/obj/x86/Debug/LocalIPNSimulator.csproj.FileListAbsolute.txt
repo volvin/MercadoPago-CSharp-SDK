@@ -1,0 +1,18 @@
+C:\Users\scirielli.ML\AppData\Local\Temporary Projects\LocalIPNSimulator\obj\x86\Debug\LocalIPNSimulator.MainForm.resources
+C:\Users\scirielli.ML\AppData\Local\Temporary Projects\LocalIPNSimulator\obj\x86\Debug\LocalIPNSimulator.Properties.Resources.resources
+C:\Users\scirielli.ML\AppData\Local\Temporary Projects\LocalIPNSimulator\obj\x86\Debug\LocalIPNSimulator.csproj.GenerateResource.Cache
+C:\Users\scirielli.ML\AppData\Local\Temporary Projects\LocalIPNSimulator\bin\Debug\LocalIPNSimulator.exe
+C:\Users\scirielli.ML\AppData\Local\Temporary Projects\LocalIPNSimulator\bin\Debug\LocalIPNSimulator.pdb
+C:\Users\scirielli.ML\AppData\Local\Temporary Projects\LocalIPNSimulator\obj\x86\Debug\LocalIPNSimulator.exe
+C:\Users\scirielli.ML\AppData\Local\Temporary Projects\LocalIPNSimulator\obj\x86\Debug\LocalIPNSimulator.pdb
+C:\Users\scirielli.ML\MercadoPagoSDK\LocalIPNSimulator\LocalIPNSimulator\obj\x86\Debug\LocalIPNSimulator.exe
+C:\Users\scirielli.ML\MercadoPagoSDK\LocalIPNSimulator\LocalIPNSimulator\obj\x86\Debug\LocalIPNSimulator.pdb
+C:\Users\scirielli.ML\MercadoPagoSDK\LocalIPNSimulator\LocalIPNSimulator\obj\x86\Debug\LocalIPNSimulator.csprojResolveAssemblyReference.cache
+C:\Users\scirielli.ML\MercadoPagoSDK\LocalIPNSimulator\LocalIPNSimulator\obj\x86\Debug\LocalIPNSimulator.MainForm.resources
+C:\Users\scirielli.ML\MercadoPagoSDK\LocalIPNSimulator\LocalIPNSimulator\obj\x86\Debug\LocalIPNSimulator.Properties.Resources.resources
+C:\Users\scirielli.ML\MercadoPagoSDK\LocalIPNSimulator\LocalIPNSimulator\obj\x86\Debug\LocalIPNSimulator.csproj.GenerateResource.Cache
+C:\Users\scirielli.ML\MercadoPagoSDK\LocalIPNSimulator\LocalIPNSimulator\bin\Debug\LocalIPNSimulator.exe.config
+C:\Users\scirielli.ML\MercadoPagoSDK\LocalIPNSimulator\LocalIPNSimulator\bin\Debug\LocalIPNSimulator.exe
+C:\Users\scirielli.ML\MercadoPagoSDK\LocalIPNSimulator\LocalIPNSimulator\bin\Debug\LocalIPNSimulator.pdb
+C:\Users\scirielli.ML\MercadoPagoSDK\LocalIPNSimulator\LocalIPNSimulator\bin\Debug\MercadoPagoSDK.dll
+C:\Users\scirielli.ML\MercadoPagoSDK\LocalIPNSimulator\LocalIPNSimulator\bin\Debug\MercadoPagoSDK.pdb

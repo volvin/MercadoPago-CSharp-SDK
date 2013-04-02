@@ -2,6 +2,6 @@ C:\Users\scirielli.ML\MercadoPagoSDK\IPNClientSample\IPNClientSample\bin\IPNClie
 C:\Users\scirielli.ML\MercadoPagoSDK\IPNClientSample\IPNClientSample\bin\IPNClientSample.pdb
 C:\Users\scirielli.ML\MercadoPagoSDK\IPNClientSample\IPNClientSample\bin\MercadoPagoSDK.dll
 C:\Users\scirielli.ML\MercadoPagoSDK\IPNClientSample\IPNClientSample\bin\MercadoPagoSDK.pdb
-C:\Users\scirielli.ML\MercadoPagoSDK\IPNClientSample\IPNClientSample\obj\Debug\ResolveAssemblyReference.cache
 C:\Users\scirielli.ML\MercadoPagoSDK\IPNClientSample\IPNClientSample\obj\Debug\IPNClientSample.dll
 C:\Users\scirielli.ML\MercadoPagoSDK\IPNClientSample\IPNClientSample\obj\Debug\IPNClientSample.pdb
+C:\Users\scirielli.ML\MercadoPagoSDK\IPNClientSample\IPNClientSample\obj\Debug\IPNClientSample.csprojResolveAssemblyReference.cache

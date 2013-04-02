@@ -11,11 +11,25 @@ namespace MercadoPagoSDK.Helpers
         {
             get
             {
-                #if SANDBOX
-                    return Properties.Sandbox.Default.AccountBalanceUri;
-                #else
-                    return Properties.Release.Default.AccountBalanceUri;
-                #endif
+                if (Environment.Scope == Environment.Scopes.Default)
+                {
+                    #if SANDBOX
+                        return Properties.Sandbox.Default.AccountBalanceUri;
+                    #else
+                        return Properties.Release.Default.AccountBalanceUri;
+                    #endif
+                }
+                else
+                {
+                    if (Environment.Scope == Environment.Scopes.Sandbox)
+                    {
+                        return Properties.Sandbox.Default.AccountBalanceUri;                    
+                    }
+                    else
+                    {
+                        return Properties.Release.Default.AccountBalanceUri;                    
+                    }
+                }
             }
         }
 
@@ -23,11 +37,25 @@ namespace MercadoPagoSDK.Helpers
         {
             get
             {
-                #if SANDBOX
-                    return Properties.Sandbox.Default.ApiBaseUrl;
-                #else
-                    return Properties.Release.Default.ApiBaseUrl;
-                #endif
+                if (Environment.Scope == Environment.Scopes.Default)
+                {
+                    #if SANDBOX
+                        return Properties.Sandbox.Default.ApiBaseUrl;
+                    #else
+                        return Properties.Release.Default.ApiBaseUrl;
+                    #endif
+                }
+                else
+                {
+                    if (Environment.Scope == Environment.Scopes.Sandbox)
+                    {
+                        return Properties.Sandbox.Default.ApiBaseUrl;
+                    }
+                    else
+                    {
+                        return Properties.Release.Default.ApiBaseUrl;
+                    }
+                }
             }
         }
 
@@ -35,11 +63,25 @@ namespace MercadoPagoSDK.Helpers
         {
             get
             {
-                #if SANDBOX
-                    return Properties.Sandbox.Default.AppSecurityUri;
-                #else
-                    return Properties.Release.Default.AppSecurityUri;
-                #endif
+                if (Environment.Scope == Environment.Scopes.Default)
+                {
+                    #if SANDBOX
+                        return Properties.Sandbox.Default.AppSecurityUri;
+                    #else
+                        return Properties.Release.Default.AppSecurityUri;
+                    #endif
+                }
+                else
+                {
+                    if (Environment.Scope == Environment.Scopes.Sandbox)
+                    {
+                        return Properties.Sandbox.Default.AppSecurityUri;
+                    }
+                    else
+                    {
+                        return Properties.Release.Default.AppSecurityUri;
+                    }
+                }
             }
         }
 
@@ -47,11 +89,25 @@ namespace MercadoPagoSDK.Helpers
         {
             get
             {
-                #if SANDBOX
-                    return Properties.Sandbox.Default.CollectionsUri;
-                #else
-                    return Properties.Release.Default.CollectionsUri;
-                #endif
+                if (Environment.Scope == Environment.Scopes.Default)
+                {
+                    #if SANDBOX
+                        return Properties.Sandbox.Default.CollectionsUri;
+                    #else
+                        return Properties.Release.Default.CollectionsUri;
+                    #endif
+                }
+                else
+                {
+                    if (Environment.Scope == Environment.Scopes.Sandbox)
+                    {
+                        return Properties.Sandbox.Default.CollectionsUri;
+                    }
+                    else
+                    {
+                        return Properties.Release.Default.CollectionsUri;
+                    }
+                }
             }
         }
 
@@ -59,11 +115,25 @@ namespace MercadoPagoSDK.Helpers
         {
             get
             {
-                #if SANDBOX
-                    return Properties.Sandbox.Default.CollectionsNotificationsUri;
-                #else
-                    return Properties.Release.Default.CollectionsNotificationsUri;
-                #endif
+                if (Environment.Scope == Environment.Scopes.Default)
+                {
+                    #if SANDBOX
+                        return Properties.Sandbox.Default.CollectionsNotificationsUri;
+                    #else
+                        return Properties.Release.Default.CollectionsNotificationsUri;
+                    #endif
+                }
+                else
+                {
+                    if (Environment.Scope == Environment.Scopes.Sandbox)
+                    {
+                        return Properties.Sandbox.Default.CollectionsNotificationsUri;
+                    }
+                    else
+                    {
+                        return Properties.Release.Default.CollectionsNotificationsUri;
+                    }
+                }
             }
         }
 
@@ -71,11 +141,25 @@ namespace MercadoPagoSDK.Helpers
         {
             get
             {
-                #if SANDBOX
-                    return Properties.Sandbox.Default.CollectionsSearchUri;
-                #else
-                    return Properties.Release.Default.CollectionsSearchUri;
-                #endif
+                if (Environment.Scope == Environment.Scopes.Default)
+                {
+                    #if SANDBOX
+                        return Properties.Sandbox.Default.CollectionsSearchUri;
+                    #else
+                        return Properties.Release.Default.CollectionsSearchUri;
+                    #endif
+                }
+                else
+                {
+                    if (Environment.Scope == Environment.Scopes.Sandbox)
+                    {
+                        return Properties.Sandbox.Default.CollectionsSearchUri;
+                    }
+                    else
+                    {
+                        return Properties.Release.Default.CollectionsSearchUri;
+                    }
+                }
             }
         }
 
@@ -83,11 +167,25 @@ namespace MercadoPagoSDK.Helpers
         {
             get
             {
-                #if SANDBOX
-                    return Properties.Sandbox.Default.MovementsSearchUri;
-                #else
-                    return Properties.Release.Default.MovementsSearchUri;
-                #endif
+                if (Environment.Scope == Environment.Scopes.Default)
+                {
+                    #if SANDBOX
+                        return Properties.Sandbox.Default.MovementsSearchUri;
+                    #else
+                        return Properties.Release.Default.MovementsSearchUri;
+                    #endif
+                }
+                else
+                {
+                    if (Environment.Scope == Environment.Scopes.Sandbox)
+                    {
+                        return Properties.Sandbox.Default.MovementsSearchUri;
+                    }
+                    else
+                    {
+                        return Properties.Release.Default.MovementsSearchUri;
+                    }
+                }
             }
         }
 
@@ -95,11 +193,25 @@ namespace MercadoPagoSDK.Helpers
         {
             get
             {
-                #if SANDBOX
-                    return Properties.Sandbox.Default.PreferencesUri;
-                #else
-                    return Properties.Release.Default.PreferencesUri;
-                #endif
+                if (Environment.Scope == Environment.Scopes.Default)
+                {
+                    #if SANDBOX
+                        return Properties.Sandbox.Default.PreferencesUri;
+                    #else
+                        return Properties.Release.Default.PreferencesUri;
+                    #endif
+                }
+                else
+                {
+                    if (Environment.Scope == Environment.Scopes.Sandbox)
+                    {
+                        return Properties.Sandbox.Default.PreferencesUri;
+                    }
+                    else
+                    {
+                        return Properties.Release.Default.PreferencesUri;
+                    }
+                }
             }
         }
 
@@ -107,11 +219,25 @@ namespace MercadoPagoSDK.Helpers
         {
             get
             {
-                #if SANDBOX
-                    return Properties.Sandbox.Default.UsersUri;
-                #else
-                    return Properties.Release.Default.UsersUri;
-                #endif
+                if (Environment.Scope == Environment.Scopes.Default)
+                {
+                    #if SANDBOX
+                        return Properties.Sandbox.Default.UsersUri;
+                    #else
+                        return Properties.Release.Default.UsersUri;
+                    #endif
+                }
+                else
+                {
+                    if (Environment.Scope == Environment.Scopes.Sandbox)
+                    {
+                        return Properties.Sandbox.Default.UsersUri;
+                    }
+                    else
+                    {
+                        return Properties.Release.Default.UsersUri;
+                    }
+                }
             }
         } 
     }

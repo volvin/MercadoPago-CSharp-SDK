@@ -119,6 +119,7 @@ under the License.
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="Environment.cs" />
     <Compile Include="Settings.cs" />
   </ItemGroup>
   <ItemGroup>

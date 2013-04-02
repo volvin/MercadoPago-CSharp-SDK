@@ -1,0 +1,11 @@
+C:\Users\scirielli.ML\MercadoPagoSDK\LocalIPNSimulator\LocalIPNSimulator\bin\Release\LocalIPNSimulator.exe.config
+C:\Users\scirielli.ML\MercadoPagoSDK\LocalIPNSimulator\LocalIPNSimulator\bin\Release\LocalIPNSimulator.exe
+C:\Users\scirielli.ML\MercadoPagoSDK\LocalIPNSimulator\LocalIPNSimulator\bin\Release\LocalIPNSimulator.pdb
+C:\Users\scirielli.ML\MercadoPagoSDK\LocalIPNSimulator\LocalIPNSimulator\bin\Release\MercadoPagoSDK.dll
+C:\Users\scirielli.ML\MercadoPagoSDK\LocalIPNSimulator\LocalIPNSimulator\bin\Release\MercadoPagoSDK.pdb
+C:\Users\scirielli.ML\MercadoPagoSDK\LocalIPNSimulator\LocalIPNSimulator\obj\x86\Release\LocalIPNSimulator.csprojResolveAssemblyReference.cache
+C:\Users\scirielli.ML\MercadoPagoSDK\LocalIPNSimulator\LocalIPNSimulator\obj\x86\Release\LocalIPNSimulator.MainForm.resources
+C:\Users\scirielli.ML\MercadoPagoSDK\LocalIPNSimulator\LocalIPNSimulator\obj\x86\Release\LocalIPNSimulator.Properties.Resources.resources
+C:\Users\scirielli.ML\MercadoPagoSDK\LocalIPNSimulator\LocalIPNSimulator\obj\x86\Release\LocalIPNSimulator.csproj.GenerateResource.Cache
+C:\Users\scirielli.ML\MercadoPagoSDK\LocalIPNSimulator\LocalIPNSimulator\obj\x86\Release\LocalIPNSimulator.exe
+C:\Users\scirielli.ML\MercadoPagoSDK\LocalIPNSimulator\LocalIPNSimulator\obj\x86\Release\LocalIPNSimulator.pdb

@@ -1,6 +1,6 @@
 C:\Users\scirielli.ML\MercadoPagoSDK\MercadoPagoSDK\bin\Release\MercadoPagoSDK.dll
 C:\Users\scirielli.ML\MercadoPagoSDK\MercadoPagoSDK\bin\Release\MercadoPagoSDK.pdb
-C:\Users\scirielli.ML\MercadoPagoSDK\MercadoPagoSDK\obj\Release\ResolveAssemblyReference.cache
 C:\Users\scirielli.ML\MercadoPagoSDK\MercadoPagoSDK\obj\Release\MercadoPagoSDK.dll
 C:\Users\scirielli.ML\MercadoPagoSDK\MercadoPagoSDK\obj\Release\MercadoPagoSDK.pdb
 C:\Users\scirielli.ML\MercadoPagoSDK\MercadoPagoSDK\bin\Release\MercadoPagoSDK.dll.config
+C:\Users\scirielli.ML\MercadoPagoSDK\MercadoPagoSDK\obj\Release\MercadoPagoSDK.csprojResolveAssemblyReference.cache
