@@ -84,6 +84,7 @@ under the License.
     <Compile Include="Common\AmountByReasonList.cs" />
     <Compile Include="Common\AmountByTTypeItem.cs" />
     <Compile Include="Common\AmountByTTypeList.cs" />
+    <Compile Include="Common\MoneyRequest.cs" />
     <Compile Include="Common\Movement.cs" />
     <Compile Include="Common\UserEx.cs" />
     <Compile Include="Common\Phone.cs" />
@@ -91,6 +92,7 @@ under the License.
     <Compile Include="Helpers\BaseHelper.cs" />
     <Compile Include="Helpers\CheckoutHelper.cs" />
     <Compile Include="Helpers\AuthHelper.cs" />
+    <Compile Include="Helpers\MoneyRequestsHelper.cs" />
     <Compile Include="Helpers\SettingsHelper.cs" />
     <Compile Include="Helpers\UsersHelper.cs" />
     <Compile Include="Helpers\PaymentsHelper.cs" />

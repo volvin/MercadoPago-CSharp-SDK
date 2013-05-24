@@ -22,6 +22,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Web.Script.Serialization;
+using System.Globalization;
 
 namespace MercadoPagoSDK
 {
@@ -110,6 +111,45 @@ namespace MercadoPagoSDK
                     {
                         Int64 tmp;
                         return Int64.TryParse(_stringData, out tmp);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Returns true if this JSONObject represents a number.
+        /// </summary>
+        public bool IsNumber
+        {
+            get
+            {
+                if (_stringData == null || _stringData.Length == 0)
+                {
+                    return false;
+                }
+                else
+                {
+                    if ((_stringData[0].ToString() == "0") && (_stringData.Length > 1))
+                    {
+                        return false;  // numbers that begins with a zero are treated like strings
+                    }
+                    else
+                    {
+                        Int64 tmp;
+                        var converted = Int64.TryParse(_stringData, out tmp);
+                        if (converted)
+                            return true;
+
+                        float tmp2;
+                        converted = float.TryParse(_stringData, out tmp2);
+                        if (converted)
+                            return true;
+
+                        converted = float.TryParse(_stringData.Replace(".", ","), out tmp2);
+                        if (converted)
+                            return true;
+
+                        return false;
                     }
                 }
             }
@@ -263,7 +303,13 @@ namespace MercadoPagoSDK
                 string floatValue = this.Dictionary[attribute].String;
                 if (floatValue != "null")
                 {
-                    return Convert.ToSingle(floatValue);
+                    float result;
+
+                    var converted = float.TryParse(floatValue.Replace(".", CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator), out result);
+                    if (converted)
+                        return result;
+
+                    return float.NaN;
                 }
                 else
                 {
@@ -574,7 +620,19 @@ namespace MercadoPagoSDK
             }
             else if (o != null) // o is a scalar
             {
-                obj._stringData = o.ToString();
+                float result;
+
+                var converted = float.TryParse(o.ToString(), out result);
+                if (converted)
+                {
+                    // Float value conversion
+                    obj._stringData = o.ToString().Replace(",", ".");
+                }
+                else
+                {
+                    // Regular conversion
+                    obj._stringData = o.ToString();
+                }
             }
 
             return obj;
@@ -621,7 +679,7 @@ namespace MercadoPagoSDK
             }
             else // some sort of scalar value
             {
-                if (obj.IsBoolean || obj.IsInteger)
+                if (obj.IsBoolean || obj.IsNumber)
                 {
                     sb.Append(obj.String);
                 }

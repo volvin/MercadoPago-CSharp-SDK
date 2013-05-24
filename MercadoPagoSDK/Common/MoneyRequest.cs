@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright 2011 MercadoLibre, Inc.
+ * Copyright 2013 MercadoLibre, Inc.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may
  * not use this file except in compliance with the License. You may obtain
@@ -22,14 +22,14 @@ using System.Text;
 namespace MercadoPagoSDK
 {
     /// <summary>
-    /// A representation of the item resource. 
+    /// A representation of the money request resource. 
     /// </summary>
-    public class Item
+    public class MoneyRequest
     {
         /// <summary>
-        /// Create a new item instance with empty values.
+        /// Create a new money request instance with empty values.
         /// </summary>
-        public Item()
+        public MoneyRequest()
         {
             string json = "{}";
 
@@ -37,14 +37,44 @@ namespace MercadoPagoSDK
         }
 
         /// <summary>
-        /// Create a new item instance using a valid json.
+        /// Create a new money request instance using a valid json.
         /// </summary>
         /// <param name="json">The json object used to
-        /// fill the item data</param>
-        public Item(JSONObject json)
+        /// fill the money request data</param>
+        public MoneyRequest(JSONObject json)
         {
-            // todo: strong type validation
+            // todo: como valido que no me asignen cualquier fruta
             _json = json;
+        }
+
+        /// <summary>
+        /// Amount field.
+        /// </summary>
+        public float? Amount
+        {
+            get
+            {
+                return _json.GetJSONFloatAttribute("amount");
+            }
+            set
+            {
+                _json.SetJSONFloatAttribute("amount", value);
+            }
+        }
+
+        /// <summary>
+        /// ConceptType field.
+        /// </summary>
+        public String ConceptType
+        {
+            get
+            {
+                return _json.GetJSONStringAttribute("concept_type");
+            }
+            set
+            {
+                _json.SetJSONStringAttribute("concept_type", value);
+            }
         }
 
         /// <summary>
@@ -78,82 +108,52 @@ namespace MercadoPagoSDK
         }
 
         /// <summary>
+        /// ExternalReference field.
+        /// </summary>
+        public String ExternalReference
+        {
+            get
+            {
+                return _json.GetJSONStringAttribute("external_reference");
+            }
+            set
+            {
+                _json.SetJSONStringAttribute("external_reference", value);
+            }
+        }
+
+        /// <summary>
         /// Id field.
         /// </summary>
-        public String Id
+        public Int32? Id
         {
             get
             {
-                return _json.GetJSONStringAttribute("id");
+                return _json.GetJSONInt32Attribute("id");
             }
             set
             {
-                _json.SetJSONStringAttribute("id", value);
+                _json.SetJSONInt32Attribute("id", value);
             }
         }
 
         /// <summary>
-        /// Quantity field.
+        /// PayerEmail field.
         /// </summary>
-        public Int16? Quantity
+        public String PayerEmail
         {
             get
             {
-                return _json.GetJSONInt16Attribute("quantity");
+                return _json.GetJSONStringAttribute("payer_email");
             }
             set
             {
-                _json.SetJSONInt16Attribute("quantity", value);
+                _json.SetJSONStringAttribute("payer_email", value);
             }
         }
 
         /// <summary>
-        /// PictureUrl field.
-        /// </summary>
-        public String PictureUrl
-        {
-            get
-            {
-                return _json.GetJSONStringAttribute("picture_url");
-            }
-            set
-            {
-                _json.SetJSONStringAttribute("picture_url", value);
-            }
-        }
-
-        /// <summary>
-        /// Title field.
-        /// </summary>
-        public String Title
-        {
-            get
-            {
-                return _json.GetJSONStringAttribute("title");
-            }
-            set
-            {
-                _json.SetJSONStringAttribute("title", value);
-            }
-        }
-
-        /// <summary>
-        /// UnitPrice field.
-        /// </summary>
-        public float? UnitPrice
-        {
-            get
-            {
-                return _json.GetJSONFloatAttribute("unit_price");
-            }
-            set
-            {
-                _json.SetJSONFloatAttribute("unit_price", value);
-            }
-        }
-
-        /// <summary>
-        /// Returns the item as a json object.
+        /// Returns the phone as a json object.
         /// </summary>
         public JSONObject ToJSON()
         {
@@ -163,7 +163,7 @@ namespace MercadoPagoSDK
         #region "Private Members"
 
         /// <summary>
-        /// The item as a json.
+        /// The phone as a json.
         /// </summary>
         private JSONObject _json;
 

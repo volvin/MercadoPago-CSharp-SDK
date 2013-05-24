@@ -163,6 +163,32 @@ namespace MercadoPagoSDK.Helpers
             }
         }
 
+        public static string MoneyRequestsUri
+        {
+            get
+            {
+                if (Environment.Scope == Environment.Scopes.Default)
+                {
+                    #if SANDBOX
+                        return Properties.Sandbox.Default.MoneyRequestsUri;
+                    #else
+                        return Properties.Release.Default.MoneyRequestsUri;
+                    #endif
+                }
+                else
+                {
+                    if (Environment.Scope == Environment.Scopes.Sandbox)
+                    {
+                        return Properties.Sandbox.Default.MoneyRequestsUri;
+                    }
+                    else
+                    {
+                        return Properties.Release.Default.MoneyRequestsUri;
+                    }
+                }
+            }
+        }
+
         public static string MovementsSearchUri
         {
             get

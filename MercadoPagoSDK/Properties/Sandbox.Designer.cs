@@ -103,5 +103,14 @@ namespace MercadoPagoSDK.Properties {
                 return ((string)(this["MovementsSearchUri"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("/money_requests")]
+        public string MoneyRequestsUri {
+            get {
+                return ((string)(this["MoneyRequestsUri"]));
+            }
+        }
     }
 }

@@ -1,5 +1,5 @@
 ﻿<?xml version='1.0' encoding='utf-8'?>
-<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="MercadoPagoSDK.Properties" GeneratedClassName="Settings">
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="MercadoPagoSDK.Properties" GeneratedClassName="Release">
   <Profiles />
   <Settings>
     <Setting Name="AppSecurityUri" Type="System.String" Scope="Application">
@@ -28,6 +28,9 @@
     </Setting>
     <Setting Name="ApiBaseUrl" Type="System.String" Scope="Application">
       <Value Profile="(Default)">https://api.mercadolibre.com</Value>
+    </Setting>
+    <Setting Name="MoneyRequestsUri" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">/money_requests</Value>
     </Setting>
   </Settings>
 </SettingsFile>

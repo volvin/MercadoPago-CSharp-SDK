@@ -29,5 +29,8 @@
     <Setting Name="MovementsSearchUri" Type="System.String" Scope="Application">
       <Value Profile="(Default)">/mercadopago_account/movements/search</Value>
     </Setting>
+    <Setting Name="MoneyRequestsUri" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">/money_requests</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
